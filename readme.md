@@ -11,7 +11,6 @@
 The image include 
 
 - `EXPOSE 8080 443` : the wiremock http/https server port.
-
 - `VOLUME /home/wiremock` : the wiremock data storage.
 
 Launch a Wiremock container
@@ -28,7 +27,7 @@ Launch a Wiremock container with Wiremock arguments
 $ docker run -d -v $PWD:/home/wiremock -p 8080:8080 -e WIREMOCK_ARGS="--verbose" rodolpheche/wiremock
 ```
 
-> `mappings` and `files__` folders created if not exist
+> `mappings` and `__files` folders created if not exist
 
 Stop the container with Wiremock HTTP API
 

@@ -27,8 +27,6 @@ Launch a Wiremock container with Wiremock arguments
 $ docker run -d -v $PWD:/home/wiremock -p 8080:8080 -e WIREMOCK_ARGS="--verbose" rodolpheche/wiremock
 ```
 
-> `mappings` and `__files` folders created if not exist
-
 Stop the container with Wiremock HTTP API
 
 ```sh

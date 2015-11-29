@@ -8,12 +8,12 @@
 
 ## How to use this image
 
-The image include 
+##### The image include 
 
 - `EXPOSE 8080 443` : the wiremock http/https server port.
 - `VOLUME /home/wiremock` : the wiremock data storage.
 
-Launch a Wiremock container
+##### Launch a Wiremock container
 
 ```sh
 $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
@@ -21,7 +21,7 @@ $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 
 > Simply access [http://localhost:8080/__admin](http://localhost:8080/__admin) to check your mappings
 
-Launch a Hello World container
+##### Launch a Hello World container
 
 ```sh
 $ git clone https://github.com/rodolpheche/wiremock-docker.git
@@ -30,13 +30,13 @@ $ docker run -d -v $PWD/wiremock-docker/stub:/home/wiremock -p 8080:8080 rodolph
 
 > Access [http://localhost:8080/hello](http://localhost:8080/hello) to show Hello World message
 
-Launch a Wiremock container with Wiremock arguments
+##### Launch a Wiremock container with Wiremock arguments
 
 ```sh
 $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -e WIREMOCK_ARGS="--verbose" rodolpheche/wiremock
 ```
 
-Stop the container with Wiremock HTTP API
+##### Stop the container with Wiremock HTTP API
 
 ```sh
 $ curl -XPOST http://localhost:8080/__admin/shutdown

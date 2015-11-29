@@ -8,7 +8,6 @@ RUN useradd wiremock -m
 USER wiremock
 WORKDIR /home/wiremock
 
-
 VOLUME /home/wiremock
 EXPOSE 8080 443
 

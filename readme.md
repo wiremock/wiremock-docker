@@ -10,7 +10,7 @@
 
 ##### The image include 
 
-- `EXPOSE 8080 443` : the wiremock http/https server port.
+- `EXPOSE 8080 9999` : the wiremock http/https server port.
 - `VOLUME /home/wiremock` : the wiremock data storage.
 
 ##### Launch a Wiremock container

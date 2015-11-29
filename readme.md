@@ -33,7 +33,7 @@ $ docker run -d -v $PWD/wiremock-docker/stub:/home/wiremock -p 8080:8080 rodolph
 Launch a Wiremock container with Wiremock arguments
 
 ```sh
-$ docker run -d -v $PWD:/home/wiremock -p 8080:8080 -e WIREMOCK_ARGS="--verbose" rodolpheche/wiremock
+$ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -e WIREMOCK_ARGS="--verbose" rodolpheche/wiremock
 ```
 
 Stop the container with Wiremock HTTP API

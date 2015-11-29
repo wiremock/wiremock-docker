@@ -21,6 +21,15 @@ $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 
 > Simply access [http://localhost:8080/__admin](http://localhost:8080/__admin) to check your mappings
 
+Launch a Hello World container
+
+```sh
+$ wget -nH --cut-dirs=4 https://github.com/rodolpheche/wiremock-docker/tree/master/stub
+$ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
+```
+
+> Access [http://localhost:8080/hello](http://localhost:8080/hello) to show Hello World message
+
 Launch a Wiremock container with Wiremock arguments
 
 ```sh

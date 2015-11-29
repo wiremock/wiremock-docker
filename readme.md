@@ -24,7 +24,7 @@ $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 Launch a Hello World container
 
 ```sh
-$ wget -nH --cut-dirs=4 -r https://github.com/rodolpheche/wiremock-docker/tree/master/stub
+$ wget -nH --cut-dirs=4 -r https://github.com/rodolpheche/wiremock-docker/tree/master/stub/
 $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 ```
 

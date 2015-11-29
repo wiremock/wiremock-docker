@@ -16,6 +16,7 @@
 ##### Launch a Wiremock container
 
 ```sh
+$ mkdir stub
 $ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 ```
 

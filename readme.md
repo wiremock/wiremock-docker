@@ -10,8 +10,8 @@
 
 ##### The image include 
 
-- `EXPOSE 8080 9999` : the wiremock http/https server port.
-- `VOLUME /home/wiremock` : the wiremock data storage.
+- `EXPOSE 8080 443` : the wiremock http/https server port
+- `VOLUME /home/wiremock` : the wiremock data storage
 
 ##### Launch a Wiremock container
 
@@ -20,13 +20,13 @@ mkdir stub
 docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 ```
 
-> Simply access [http://localhost:8080/__admin](http://localhost:8080/__admin) to check your mappings
+> Simply access [http://localhost:8080/__admin](http://localhost:8080/__admin) to display your mappings (empty set)
 
 ##### Launch a Hello World container
 
 ```sh
 git clone https://github.com/rodolpheche/wiremock-docker.git
-docker run -d -v $PWD/wiremock-docker/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
+docker run -d -v $PWD/wiremock-docker/sample/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 ```
 
 > Access [http://localhost:8080/hello](http://localhost:8080/hello) to show Hello World message
@@ -34,13 +34,7 @@ docker run -d -v $PWD/wiremock-docker/stub:/home/wiremock -p 8080:8080 rodolphec
 ##### Launch a Wiremock container with Wiremock arguments
 
 ```sh
-docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 9999:9999 -e WIREMOCK_ARGS="--verbose --https-port 9999" rodolpheche/wiremock
+docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 443:443 -e WIREMOCK_ARGS="--verbose --https-port 443" rodolpheche/wiremock
 ```
 
-> Access [https://localhost:9999/__admin](https://localhost:9999/__admin) to to check https working
-
-##### Stop the container with Wiremock HTTP API
-
-```sh
-curl -XPOST http://localhost:8080/__admin/shutdown
-```
+> Access [https://localhost/__admin](https://localhost/__admin) to to check https working

@@ -11,7 +11,7 @@ else
   # todo
   sed -i "s/$VERSION/$LATEST_VERSION/g" readme.md
 fi
-sed "s/WIREMOCK_VERSION\(.*\)/WIREMOCK_VERSION $LATEST_VERSION/" Dockerfile
+sed "s/ENV WIREMOCK_VERSION\(.*\)/ENV WIREMOCK_VERSION $LATEST_VERSION/" Dockerfile
 sed "s/^VERSION=.*/VERSION=$LATEST_VERSION/" version.properties
 
 

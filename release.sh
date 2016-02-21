@@ -20,4 +20,3 @@ git config --global user.name "rodolpheche"
 git config --global user.email rodolphe.chaigneau@gmail.com
 git add Dockerfile readme.md version.properties
 git commit -m "upgrade version to $LATEST_VERSION"
-git push

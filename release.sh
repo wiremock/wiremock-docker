@@ -11,10 +11,10 @@ else
   # todo
   sed -i "s/$VERSION/$LATEST_VERSION/g" readme.md
 fi
-sed "s/ENV WIREMOCK_VERSION\(.*\)/ENV WIREMOCK_VERSION $LATEST_VERSION/" Dockerfile
-sed "s/^VERSION=.*/VERSION=$LATEST_VERSION/" version.properties
+sed -i "s/ENV WIREMOCK_VERSION\(.*\)/ENV WIREMOCK_VERSION $LATEST_VERSION/" Dockerfile
+sed -i "s/^VERSION=.*/VERSION=$LATEST_VERSION/" version.properties
 
 
 # commit change
-git add Dockerfile readme.md
+git add Dockerfile readme.md version.properties
 git commit -m "upgrade version to $LATEST_VERSION"

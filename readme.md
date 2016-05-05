@@ -10,7 +10,7 @@
 
 ##### The image include 
 
-- `EXPOSE 8080 443` : the wiremock http/https server port
+- `EXPOSE 8080 8081` : the wiremock http/https server port
 - `VOLUME /home/wiremock` : the wiremock data storage
 
 ##### Launch a Wiremock container
@@ -34,7 +34,7 @@ docker run -d -v $PWD/wiremock-docker/sample/stub:/home/wiremock -p 8080:8080 ro
 ##### Launch a Wiremock container with Wiremock arguments
 
 ```sh
-docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 443:443 -e WIREMOCK_ARGS="--verbose --https-port 443" rodolpheche/wiremock
+docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 8081:8081 -e WIREMOCK_ARGS="--verbose --https-port 8081" rodolpheche/wiremock
 ```
 
 > Access [https://localhost/__admin](https://localhost/__admin) to to check https working

@@ -9,6 +9,6 @@ USER wiremock
 WORKDIR /home/wiremock
 
 VOLUME /home/wiremock
-EXPOSE 8080 443
+EXPOSE 8080 8081
 
 CMD java -jar /wiremock-standalone-$WIREMOCK_VERSION.jar $WIREMOCK_ARGS

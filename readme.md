@@ -37,4 +37,4 @@ docker run -d -v $PWD/wiremock-docker/sample/stub:/home/wiremock -p 8080:8080 ro
 docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 8081:8081 -e WIREMOCK_ARGS="--verbose --https-port 8081" rodolpheche/wiremock
 ```
 
-> Access [https://localhost/__admin](https://localhost/__admin) to to check https working
+> Access [https://localhost:8081/__admin](https://localhost:8081/__admin) to to check https working

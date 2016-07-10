@@ -4,8 +4,7 @@
 
 ## Supported tags and respective Dockerfile links :
 
-- `2.1.0-beta`, `latest` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.0-beta/Dockerfile)
-- `2.0.10-beta` [(2.0/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.0.10-beta/Dockerfile)
+- `2.1.6`, `latest` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.6/Dockerfile)
 
 ## How to use this image
 

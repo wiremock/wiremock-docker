@@ -1,6 +1,6 @@
 FROM java:8-jdk
 
-ENV WIREMOCK_VERSION 2.1.7
+ENV WIREMOCK_VERSION 2.1.11
 
 RUN wget -q https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/${WIREMOCK_VERSION}/wiremock-standalone-$WIREMOCK_VERSION.jar
 

@@ -4,11 +4,11 @@
 
 ## Supported tags and respective Dockerfile links :
 
-- `2.1.11`, `latest` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.11/Dockerfile)
+- `2.1.12`, `latest` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.12/Dockerfile)
 
 ## How to use this image
 
-##### The image include 
+#### The image include 
 
 - `EXPOSE 8080 8081` : the wiremock http/https server port
 - `VOLUME /home/wiremock` : the wiremock data storage
@@ -38,3 +38,7 @@ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 8081:8081 -e WIREMOCK_
 ```
 
 > Access [https://localhost:8081/__admin](https://localhost:8081/__admin) to to check https working
+
+#### Known issues
+
+TODO speak about permission denied error message in case of uid != 1000

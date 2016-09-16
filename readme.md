@@ -2,7 +2,7 @@
 
 > [Wiremock](http://wiremock.org) standalone HTTP server Docker image
 
-## Supported tags and respective Dockerfile links :
+## Supported tags & respective Dockerfile links :
 
 - `2.1.12`, `latest` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.12/Dockerfile)
 
@@ -41,4 +41,4 @@ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 -p 8081:8081 -e WIREMOCK_
 
 #### Known issues
 
-TODO speak about permission denied error message in case of uid != 1000
+- getting permission error with binded $PWD folder if **host uid executor != 1000**

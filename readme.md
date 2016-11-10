@@ -28,7 +28,7 @@ docker run -d -v $PWD/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 
 ```sh
 git clone https://github.com/rodolpheche/wiremock-docker.git
-docker run -d -v $PWD/wiremock-docker/sample/stub:/home/wiremock -p 8080:8080 rodolpheche/wiremock
+docker run -it --rm -v $PWD/wiremock-docker/sample:/home/wiremock -p 8080:8080 rodolpheche/wiremock
 ```
 
 > Access [http://localhost:8080/hello](http://localhost:8080/hello) to show Hello World message

@@ -3,9 +3,9 @@ FROM java:8-jdk
 MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
 
 ENV WIREMOCK_VERSION 2.4.1
+ENV GOSU_VERSION 1.7
 
 # grab gosu for easy step-down from root
-ENV GOSU_VERSION 1.7
 RUN set -x \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
@@ -16,7 +16,10 @@ RUN set -x \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true
 
-RUN wget -q https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/${WIREMOCK_VERSION}/wiremock-standalone-$WIREMOCK_VERSION.jar -O /wiremock-standalone.jar
+# grab wiremock standalone jar
+RUN mkdir -p /var/wiremock/lib/ \
+  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/${WIREMOCK_VERSION}/wiremock-standalone-$WIREMOCK_VERSION.jar \
+    -O /var/wiremock/lib/wiremock-standalone.jar
 
 WORKDIR /home/wiremock
 
@@ -26,4 +29,4 @@ VOLUME /home/wiremock
 EXPOSE 8080 8081
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["java", "-jar", "/wiremock-standalone.jar"]
+CMD ["java", "-cp", "/var/wiremock/lib/*:/var/wiremock/extensions/*", "com.github.tomakehurst.wiremock.standalone.WireMockServerRunner"]

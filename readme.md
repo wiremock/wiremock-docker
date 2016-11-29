@@ -4,7 +4,8 @@
 
 ## Supported tags & respective Dockerfile links :
 
-- `2.4.1`, `latest` [(2.4/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.4.1/Dockerfile)
+- `latest` [(latest/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/master/Dockerfile)
+- `2.4.1` [(2.4/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.4.1/Dockerfile)
 - `2.3.1` [(2.3/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.3.1/Dockerfile)
 - `2.2.2` [(2.2/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.2.2/Dockerfile)
 - `2.1.12` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.12/Dockerfile)
@@ -22,6 +23,12 @@
 
 #### Getting started
 
+##### Pull latest image
+
+```sh
+docker pull rodolpheche/wiremock
+```
+
 ##### Start a Wiremock container
 
 ```sh
@@ -30,44 +37,13 @@ docker run -it --rm -p 8080:8080 rodolpheche/wiremock
 
 > Access [http://localhost:8080/__admin](http://localhost:8080/__admin) to display the mappings (empty set)
 
-##### Start a Hello World container
-
-```sh
-git clone https://github.com/rodolpheche/wiremock-docker.git
-docker run -it --rm -v $PWD/wiremock-docker/samples/hello/stubs:/home/wiremock -p 8080:8080 rodolpheche/wiremock
-```
-
-> Access [http://localhost:8080/hello](http://localhost:8080/hello) to show Hello World message
-
 ##### Start a Wiremock container with Wiremock arguments
-
-**!! WARNING !!** WIREMOCK_ARGS environment variable is now deprecated, it will be removed in a future version
-
-```sh
-# !! DEPRECATED !!
-docker run -it --rm -p 8081:8081 -e WIREMOCK_ARGS="--https-port 8081" rodolpheche/wiremock
-# !! DEPRECATED !!
-```
-
-Instead, you should now use docker container arguments :
 
 ```sh
 docker run -it --rm -p 8081:8081 rodolpheche/wiremock --https-port 8081 --verbose
 ```
 
-> Access [https://localhost:8081/__admin](https://localhost:8081/__admin) to to check https working
-
-##### Start a Bash session from a container
-
-```sh
-docker run -d -p 8080:8080 --name rodolpheche-wiremock-container rodolpheche/wiremock
-docker exec -it rodolpheche-wiremock-container bash
-echo $WIREMOCK_VERSION
-exit # exit container
-docker rm -f rodolpheche-wiremock-container
-```
-
-
+> Access [https://localhost:8081/__admin](https://localhost:8081/__admin) to check https working
 
 ##### Start record mode using host uid for file creation
 
@@ -75,10 +51,70 @@ In Record mode, when binding host folders (ex. $PWD/test) with the container vol
 To avoid this, you can use the `uid` docker environment variable to also bind host uid with the container executor uid.
 
 ```sh
-docker run -d -p 8080:8080 --name rodolpheche-wiremock-container -v $PWD/test:/home/wiremock -e uid=$(id -u) rodolpheche/wiremock --proxy-all="http://registry.hub.docker.com" --record-mappings --verbose
+docker run -d --name rodolpheche-wiremock-container \
+  -p 8080:8080 \
+  -v $PWD/test:/home/wiremock \
+  -e uid=$(id -u) \
+  rodolpheche/wiremock \
+    --proxy-all="http://registry.hub.docker.com" \
+    --record-mappings --verbose
 curl http://localhost:8080
 docker rm -f rodolpheche-wiremock-container
 ```
 
 > Check the created file owner with `ls -alR test`
  
+#### Samples
+
+##### Start a Hello World container
+
+###### Inline
+
+```sh
+git clone https://github.com/rodolpheche/wiremock-docker.git
+docker run -it --rm \
+  -p 8080:8080 \
+  -v $PWD/wiremock-docker/samples/hello/stubs:/home/wiremock \
+  rodolpheche/wiremock
+```
+
+###### Dockerfile
+
+```sh
+git clone https://github.com/rodolpheche/wiremock-docker.git
+docker build -t wiremock-hello wiremock-docker/samples/hello
+docker run -it --rm -p 8080:8080 wiremock-hello
+```
+
+> Access [http://localhost:8080/hello](http://localhost:8080/hello) to show Hello World message
+
+##### Use wiremock extensions
+
+###### Inline
+
+```sh
+git clone https://github.com/rodolpheche/wiremock-docker.git
+# prepare extension folder
+mkdir wiremock-docker/samples/random/extensions
+# download extension
+wget https://repo1.maven.org/maven2/com/opentable/wiremock-body-transformer/1.1.3/wiremock-body-transformer-1.1.3.jar \
+  -O wiremock-docker/samples/random/extensions/wiremock-body-transformer-1.1.3.jar
+# run a container using extension 
+docker run -it --rm \
+  -p 8080:8080 \
+  -v $PWD/wiremock-docker/samples/random/stubs:/home/wiremock \
+  -v $PWD/wiremock-docker/samples/random/extensions:/var/wiremock/extensions \
+  rodolpheche/wiremock \
+    --extensions com.opentable.extension.BodyTransformer
+```
+
+###### Dockerfile
+
+```sh
+git clone https://github.com/rodolpheche/wiremock-docker.git
+docker build -t wiremock-random wiremock-docker/samples/random
+docker run -it --rm -p 8080:8080 wiremock-random
+```
+
+> Access [http://localhost:8080/random](http://localhost:8080/random) to show random number
+

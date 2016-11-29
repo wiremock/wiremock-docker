@@ -1,0 +1,11 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/random"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "random.json",
+    "transformers": ["body-transformer"]
+  }
+}

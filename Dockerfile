@@ -2,7 +2,7 @@ FROM java:8-jdk
 
 MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
 
-ENV WIREMOCK_VERSION 2.4.1
+ENV WIREMOCK_VERSION 2.5.0
 ENV GOSU_VERSION 1.7
 
 # grab gosu for easy step-down from root

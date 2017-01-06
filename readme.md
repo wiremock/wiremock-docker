@@ -4,7 +4,7 @@
 
 ## Supported tags & respective Dockerfile links :
 
-- `latest` [(latest/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/master/Dockerfile)
+- `2.5.0`, `latest` [(latest/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.5.0/Dockerfile)
 - `2.4.1` [(2.4/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.4.1/Dockerfile)
 - `2.3.1` [(2.3/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.3.1/Dockerfile)
 - `2.2.2` [(2.2/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.2.2/Dockerfile)

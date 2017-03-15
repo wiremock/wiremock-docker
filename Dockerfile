@@ -1,4 +1,4 @@
-FROM java:8-jdk
+FROM openjdk:8-jre
 
 MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
 

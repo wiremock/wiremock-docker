@@ -15,9 +15,4 @@ if [ "$uid" != "" ]; then
 	set -- gosu $uid:$uid "$@"
 fi
 
-if [ -n "${WIREMOCK_ARGS}" ]
-then
-  echo "WARNING !! WIREMOCK_ARGS environment variable is now deprecated, it will be removed in a future version"
-fi
-
-exec "$@" ${WIREMOCK_ARGS}
+exec "$@"

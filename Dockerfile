@@ -2,7 +2,7 @@ FROM openjdk:8-jre
 
 MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
 
-ENV WIREMOCK_VERSION 2.7.1
+ENV WIREMOCK_VERSION 2.8.0
 ENV GOSU_VERSION 1.7
 
 # grab gosu for easy step-down from root
@@ -18,10 +18,12 @@ RUN set -x \
 
 # grab wiremock standalone jar
 RUN mkdir -p /var/wiremock/lib/ \
-  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/${WIREMOCK_VERSION}/wiremock-standalone-$WIREMOCK_VERSION.jar \
+  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/$WIREMOCK_VERSION/wiremock-standalone-$WIREMOCK_VERSION.jar \
     -O /var/wiremock/lib/wiremock-standalone.jar
 
 WORKDIR /home/wiremock
+
+RUN echo $WIREMOCK_VERSION > wiremock-version
 
 COPY docker-entrypoint.sh /
 

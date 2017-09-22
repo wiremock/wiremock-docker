@@ -23,8 +23,6 @@ RUN mkdir -p /var/wiremock/lib/ \
 
 WORKDIR /home/wiremock
 
-RUN echo $WIREMOCK_VERSION > wiremock-version
-
 COPY docker-entrypoint.sh /
 
 VOLUME /home/wiremock

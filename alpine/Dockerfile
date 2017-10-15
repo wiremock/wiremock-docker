@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
 
-ENV WIREMOCK_VERSION 2.8.0
+ENV WIREMOCK_VERSION 2.9.0
 
 RUN apk add --update openssl
 

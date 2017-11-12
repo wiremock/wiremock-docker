@@ -5,7 +5,9 @@
 ## Supported tags & respective Dockerfile links :
 
 
-- `2.10.1`, `latest` [(2.10/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/Dockerfile)
+- `2.11.0`, `latest` [(2.11/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/Dockerfile)
+- `2.11.0-alpine` [(2.11-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/alpine/Dockerfile)
+- `2.10.1` [(2.10/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/Dockerfile)
 - `2.10.1-alpine` [(2.10-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/alpine/Dockerfile)
 - `2.9.0` [(2.9/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.9.0/Dockerfile)
 - `2.9.0-alpine` [(2.9-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.9.0/alpine/Dockerfile)

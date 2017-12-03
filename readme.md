@@ -5,7 +5,9 @@
 ## Supported tags & respective Dockerfile links :
 
 
-- `2.11.0`, `latest` [(2.11/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/Dockerfile)
+- `2.12.0`, `latest` [(2.12/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.12.0/Dockerfile)
+- `2.12.0-alpine` [(2.12-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.12.0/alpine/Dockerfile)
+- `2.11.0` [(2.11/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/Dockerfile)
 - `2.11.0-alpine` [(2.11-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/alpine/Dockerfile)
 - `2.10.1` [(2.10/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/Dockerfile)
 - `2.10.1-alpine` [(2.10-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/alpine/Dockerfile)
@@ -60,7 +62,7 @@ docker run -it --rm -p 8081:8081 rodolpheche/wiremock --https-port 8081 --verbos
 
 ##### Start record mode using host uid for file creation
 
-In Record mode, when binding host folders (ex. $PWD/test) with the container volume (/home/wiremock), the created files will be owned by root, which is, in most cases, undesired.
+In Record mode, when binding host folders (e.g. $PWD/test) with the container volume (/home/wiremock), the created files will be owned by root, which is, in most cases, undesired.
 To avoid this, you can use the `uid` docker environment variable to also bind host uid with the container executor uid.
 
 ```sh
@@ -76,6 +78,22 @@ docker rm -f rodolpheche-wiremock-container
 ```
 
 > Check the created file owner with `ls -alR test`
+
+However, the example above is a facility. 
+The good practice is to create yourself the binded folder with correct permissions and to use the *-u* docker argument.
+
+```sh
+mkdir test
+docker run -d --name rodolpheche-wiremock-container \
+  -p 8080:8080 \
+  -v $PWD/test:/home/wiremock \
+  -u $(id -u):$(id -u) \
+  rodolpheche/wiremock \
+    --proxy-all="http://registry.hub.docker.com" \
+    --record-mappings --verbose
+curl http://localhost:8080
+docker rm -f rodolpheche-wiremock-container
+```
  
 #### Samples
 

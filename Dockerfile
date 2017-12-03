@@ -2,7 +2,7 @@ FROM openjdk:8-jre
 
 MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
 
-ENV WIREMOCK_VERSION 2.11.0
+ENV WIREMOCK_VERSION 2.12.0
 ENV GOSU_VERSION 1.7
 
 # grab gosu for easy step-down from root

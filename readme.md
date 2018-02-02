@@ -15,7 +15,7 @@
 
 ## The image includes
 
-- `EXPOSE 8080 8081` : the wiremock http/https server port
+- `EXPOSE 8080 8443` : the wiremock http/https server port
 - `VOLUME /home/wiremock` : the wiremock data storage
 
 ## How to use this image
@@ -43,10 +43,10 @@ docker run -it --rm -p 8080:8080 rodolpheche/wiremock
 ##### Start a Wiremock container with Wiremock arguments
 
 ```sh
-docker run -it --rm -p 8081:8081 rodolpheche/wiremock --https-port 8081 --verbose
+docker run -it --rm -p 8443:8443 rodolpheche/wiremock --https-port 8443 --verbose
 ```
 
-> Access [https://localhost:8081/__admin](https://localhost:8081/__admin) to check https working
+> Access [https://localhost:8443/__admin](https://localhost:8443/__admin) to check https working
 
 ##### Start record mode using host uid for file creation
 
@@ -136,4 +136,3 @@ docker run -it --rm -p 8080:8080 wiremock-random
 ```
 
 > Access [http://localhost:8080/random](http://localhost:8080/random) to show random number
-

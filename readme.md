@@ -2,32 +2,16 @@
 
 > [Wiremock](http://wiremock.org) standalone HTTP server Docker image
 
-## Supported tags & respective Dockerfile links :
+## Supported tags :
 
+### Last
 
 - `2.14.0`, `latest` [(2.14/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.14.0/Dockerfile)
 - `2.14.0-alpine` [(2.14-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.14.0/alpine/Dockerfile)
-- `2.13.0` [(2.13/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.13.0/Dockerfile)
-- `2.13.0-alpine` [(2.13-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.13.0/alpine/Dockerfile)
-- `2.12.0` [(2.12/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.12.0/Dockerfile)
-- `2.12.0-alpine` [(2.12-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.12.0/alpine/Dockerfile)
-- `2.11.0` [(2.11/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/Dockerfile)
-- `2.11.0-alpine` [(2.11-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.11.0/alpine/Dockerfile)
-- `2.10.1` [(2.10/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/Dockerfile)
-- `2.10.1-alpine` [(2.10-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.10.1/alpine/Dockerfile)
-- `2.9.0` [(2.9/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.9.0/Dockerfile)
-- `2.9.0-alpine` [(2.9-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.9.0/alpine/Dockerfile)
-- `2.8.0` [(2.8/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.8.0/Dockerfile)
-- `2.8.0-alpine` [(2.8-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.8.0/alpine/Dockerfile)
-- `2.7.1` [(2.7/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.7.1/Dockerfile)
-- `2.7.1-alpine` [(2.7-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.7.1/alpine/Dockerfile)
-- `2.6.0` [(2.6/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.6.0/Dockerfile)
-- `2.6.0-alpine` [(2.6-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.6.0/alpine/Dockerfile)
-- `2.5.1` [(2.5/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.5.1/Dockerfile)
-- `2.4.1` [(2.4/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.4.1/Dockerfile)
-- `2.3.1` [(2.3/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.3.1/Dockerfile)
-- `2.2.2` [(2.2/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.2.2/Dockerfile)
-- `2.1.12` [(2.1/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.1.12/Dockerfile)
+
+### Complete list
+
+[Tags](https://hub.docker.com/r/rodolpheche/wiremock/tags/)
 
 ## The image includes
 

@@ -75,7 +75,7 @@ mkdir test
 docker run -d --name rodolpheche-wiremock-container \
   -p 8080:8080 \
   -v $PWD/test:/home/wiremock \
-  -u $(id -u):$(id -u) \
+  -u $(id -u):$(id -g) \
   rodolpheche/wiremock \
     --proxy-all="http://registry.hub.docker.com" \
     --record-mappings --verbose

@@ -82,6 +82,8 @@ docker run -d --name rodolpheche-wiremock-container \
 curl http://localhost:8080
 docker rm -f rodolpheche-wiremock-container
 ```
+
+> Check the created file owner with `ls -alR test`
  
 #### Samples
 

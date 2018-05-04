@@ -1,4 +1,4 @@
-# Wiremock Docker [![Build Status](https://travis-ci.org/rodolpheche/wiremock-docker.svg?branch=master)](https://travis-ci.org/rodolpheche/wiremock-docker)
+# Wiremock Docker [![Build Status](https://travis-ci.org/rodolpheche/wiremock-docker.svg?branch=master)](https://travis-ci.org/rodolpheche/wiremock-docker) [![Docker Pulls](https://img.shields.io/docker/pulls/rodolpheche/wiremock.svg)](https://hub.docker.com/r/rodolpheche/wiremock/)
 
 > [Wiremock](http://wiremock.org) standalone HTTP server Docker image
 

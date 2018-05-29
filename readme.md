@@ -6,8 +6,8 @@
 
 ### Last
 
-- `2.17.0`, `latest` [(2.17/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.17.0/Dockerfile)
-- `2.17.0-alpine` [(2.17-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.17.0/alpine/Dockerfile)
+- `2.18.0`, `latest` [(2.18/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.18.0/Dockerfile)
+- `2.18.0-alpine` [(2.18-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.18.0/alpine/Dockerfile)
 
 ### Complete list
 

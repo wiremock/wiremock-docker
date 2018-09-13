@@ -31,7 +31,7 @@ script:
   - ./test.sh
 
 before_deploy:
-  - if [ "$CURRENT_VERSION" = "$WIREMOCK_LATEST_VERSION" ]; then travis_terminate; fi
+  - if [ "$CURRENT_VERSION" = "$WIREMOCK_LATEST_VERSION" ]; then travis_terminate 0; fi
   - docker tag wiremock-alpine rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION-alpine
   - docker tag wiremock rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION
   - docker tag wiremock rodolpheche/wiremock:latest

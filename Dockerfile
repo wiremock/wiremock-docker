@@ -1,6 +1,6 @@
 FROM openjdk:8-jre
 
-MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
+LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 ENV WIREMOCK_VERSION 2.19.0
 ENV GOSU_VERSION 1.10

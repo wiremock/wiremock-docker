@@ -24,8 +24,8 @@ RUN set -x \
 
 # grab wiremock standalone jar
 RUN mkdir -p /var/wiremock/lib/ \
-  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/$WIREMOCK_VERSION/wiremock-standalone-$WIREMOCK_VERSION.jar \
-    -O /var/wiremock/lib/wiremock-standalone.jar
+  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$WIREMOCK_VERSION/wiremock-jre8-standalone-$WIREMOCK_VERSION.jar \
+    -O /var/wiremock/lib/wiremock-jre8-standalone.jar
 
 WORKDIR /home/wiremock
 

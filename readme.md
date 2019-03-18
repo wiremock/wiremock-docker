@@ -23,6 +23,7 @@
 #### Environment variables
 
 - `uid` : the container executor uid, useful to avoid file creation owned by root
+- `JAVA_OPTS` : for passing any custom options to Java e.g. `-Xmx128m`
 
 #### Getting started
 

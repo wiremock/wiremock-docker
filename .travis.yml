@@ -14,31 +14,20 @@ notifications:
     secure: "a/Dj2bFQXq6UGTgirG61u9O3dA/2Zh18ckR4coBqn4/Nrutgf7XHGi66YgkHAkmvMDiY5m40n/zE7FmAYBLGzQBIE7D8FOa81qSb5WpP6lJSTAGitiPzidw1e/cZvP+rhr5Zoa0rp7hSOyGRNGJaDSF10CeZLkm2wNaSrbFreaRg972EEh7jWZhSa7YUJLdD2kdZVWYHoHEg8QKKyAag5pq/UPiwZ2uM2D6C5SxS0NpdE1MbLNE5VoU8NHGV7amX5L3sb2iK3+AvhxqoLEWdojB9DAZhuMl8s/mL8zok+xomM5i/WYidBe3GO3iRQyvs4DoHoS5/5UELNouLY/Clj/m+5OZTxbe52JpbPPPTK95S9xvVbYI9bXy1PTv3K33be9A6FKKXeAUgWvWL51TeTyAWhgO3ccTkQX4en2M1+g+WWVXxF9Zj8WbmwzXzx7q/fVTvxeZ39A/nYDz9oblOm3Ld9bpMJVfrr0vcFx5f0OZnvyB7badqWn26fskFAjlbN8K/6A6+vXv6KfxJLnUI8Nvpf49OPIxcnqTNogB0hW9ODDczr8CJMyfp5kFDENa3NDI/VCSEagQxRysURbkl7OaJyljRm21zk/kxv05homxE4cLeQpQkp7G3lIUNT7IO8RBOV/LYJOcndGN479RgkXA27hZhLgBy0l3/HSg5hvQ="
 
 before_install:
-  - if [ "$CURRENT_VERSION" != "$WIREMOCK_LATEST_VERSION" ]; then git checkout master && ./project.sh release prepare $WIREMOCK_LATEST_VERSION ; fi
-  - docker build -t wiremock .
-  - docker build -t wiremock-alpine alpine
-  - docker build -t wiremock-hello samples/hello
-  - docker build -t wiremock-random samples/random
+  - if [ "$CURRENT_VERSION" != "$WIREMOCK_LATEST_VERSION" ]; then git checkout master && ./project.sh update $WIREMOCK_LATEST_VERSION ; fi
 
 install:
-  - docker run --name wiremock -d wiremock
-  - docker run --name wiremock-args -d wiremock --https-port 8443 --verbose
-  - docker run --name wiremock-hello -d wiremock-hello
-  - docker run --name wiremock-random -d wiremock-random
-  - docker run --name wiremock-alpine -d wiremock-alpine
+  - ./project.sh build -v
 
 script:
-  - ./test.sh
+  - ./project.sh test -v
 
 before_deploy:
   - if [ "$CURRENT_VERSION" = "$WIREMOCK_LATEST_VERSION" ]; then travis_terminate 0; fi
-  - docker tag wiremock-alpine rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION-alpine
-  - docker tag wiremock rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION
-  - docker tag wiremock rodolpheche/wiremock:latest
   - echo "$DOCKER_PASSWORD" | docker login -u "rodolpheche" --password-stdin
   - docker push rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION-alpine
   - docker push rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION
-  - docker push rodolpheche/wiremock:latest
+  - docker push rodolpheche/wiremock
   - git config --local user.name "rodolpheche"
   - git config --local user.email "$GIT_USER_EMAIL"
   - git add .
@@ -48,6 +37,7 @@ before_deploy:
   - git push origin master
 
 deploy:
+  name: $WIREMOCK_LATEST_VERSION
   provider: releases
   api_key: "${GITHUB_API_KEY}"
   skip_cleanup: true

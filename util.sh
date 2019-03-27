@@ -10,6 +10,14 @@ assert_bash_ok() {
   fi
 }
 
+assert_equal() {
+  if [ "$1" = "$2" ]; then
+    _smoke_success "$1 = $2"
+  else
+    _smoke_fail "$1 != $2"
+  fi
+}
+
 title() {
   echo ""
   message "${bold}$1${normal}"

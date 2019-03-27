@@ -2,136 +2,110 @@
 
 . util.sh
 
+IMAGE_NAME=rodolpheche/wiremock
+CURRENT_VERSION=$(cat Dockerfile | grep "ENV WIREMOCK_VERSION" | cut -d ' ' -f 3)
+CURRENT_ALPINE_VERSION=$(cat alpine/Dockerfile | grep "ENV WIREMOCK_VERSION" | cut -d ' ' -f 3)
+IMAGE_TAG=${IMAGE_NAME}:${CURRENT_VERSION}
+ALPINE_IMAGE_TAG=${IMAGE_NAME}:${CURRENT_ALPINE_VERSION}-alpine
+
 EXECUTION_OUTPUT=/dev/null
 
 usage() {
 cat << EOF
 Usage: $0 COMMAND [-v]
+       $0 [ -h | --help ]
 
 Wiremock Docker image project
 
 Commands:
   build             Build classic & alpine images
   test              Test classic & alpine images
-  release clean     Clean workspace (revert readme & Dockerfiles)
-  release prepare   Prepare release (update version in readme.md, Dockerfile & alpine/Dockerfile files)
-  release perform   Perform release (docker push & git tag/push)
+  clean             Clean workspace (revert readme.md, Dockerfile & alpine/Dockerfile)
+  update            Update version (readme.md, Dockerfile & alpine/Dockerfile)
+  release           Perform release (docker push & git tag/push) # NOT IMPLEMENTED
 
 Args:
-  -v      verbose mode
-  -y      force yes
+  -v|--version      verbose mode
+  -y                force yes
 EOF
 exit
 }
 
-build() {
-  #################
-  # classic image #
-  #################
+_build() {
+  TAG=$1
 
-  CURRENT_VERSION=$(cat Dockerfile | grep "ENV WIREMOCK_VERSION" | cut -d ' ' -f 3)
-  title "Build Wiremock Docker image $CURRENT_VERSION"
+  title "Build Wiremock Docker image ${TAG}"
 
-  message "Build classic image"
-  docker build -t ${IMAGE_NAME} . > ${EXECUTION_OUTPUT}
-  assert_bash_ok $?
-
-  ################
-  # alpine image #
-  ################
-
-  CURRENT_VERSION=$(cat alpine/Dockerfile | grep "ENV WIREMOCK_VERSION" | cut -d ' ' -f 3)
-  title "Build Wiremock Docker alpine image $CURRENT_VERSION"
-
-  message "Build alpine image"
-  docker build -t ${IMAGE_NAME}-alpine alpine > ${EXECUTION_OUTPUT}
+  docker build -t ${TAG} . > ${EXECUTION_OUTPUT}
   assert_bash_ok $?
 }
 
-test() {
-  # remove running container
-  docker rm -f wiremock-container > ${EXECUTION_OUTPUT} 2>&1
+build() {
+  _build ${IMAGE_TAG}
+  docker tag ${IMAGE_TAG} ${IMAGE_NAME}
+  _build ${ALPINE_IMAGE_TAG}
+}
 
-  #################
-  # classic image #
-  #################
+_test() {
+  TAG=$1
+
+  title "Test Wiremock Docker image ${TAG}"
 
   # version message
-  eval $(docker run --rm ${IMAGE_NAME}-alpine env | grep WIREMOCK_VERSION)
-  title "Test Wiremock Docker image $WIREMOCK_VERSION"
+  message "Test version"
+  eval $(docker run --rm ${TAG} env | grep WIREMOCK_VERSION)
+  assert_equal ${CURRENT_VERSION} ${WIREMOCK_VERSION}
 
   # default
   message "Test default run"
-  CONTAINER_ID=$(docker run -d ${IMAGE_NAME})
+  CONTAINER_ID=$(docker run -d ${TAG})
   CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
   sleep 1
-  smoke_url_ok "http://$CONTAINER_IP:8080/__admin"
+  smoke_url_ok "http://${CONTAINER_IP}:8080/__admin"
   smoke_assert_body "mappings"
   docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
 
   # wiremock args
   message "Test Wiremock args"
-  CONTAINER_ID=$(docker run -d ${IMAGE_NAME} --https-port 8443)
+  CONTAINER_ID=$(docker run -d ${TAG} --https-port 8443)
   CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
   sleep 1
-  smoke_url_ok "https://$CONTAINER_IP:8443/__admin"
+  smoke_url_ok "https://${CONTAINER_IP}:8443/__admin"
   smoke_assert_body "mappings"
   docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
+}
+
+test() {
+  # classic image common tests
+  _test ${IMAGE_TAG}
 
   # helloworld sample
   message "Test helloworld sample"
   docker build -t wiremock-hello samples/hello > ${EXECUTION_OUTPUT}
   CONTAINER_ID=$(docker run -d wiremock-hello)
   CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
-  sleep 1
-  smoke_url_ok "http://$CONTAINER_IP:8080/hello"
+  sleep 5
+  smoke_url_ok "http://${CONTAINER_IP}:8080/hello"
   smoke_assert_body "Hello World !"
   docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
+  docker image rm wiremock-hello > ${EXECUTION_OUTPUT}
 
   # extension
   message "Test Wiremock extension"
   docker build -t wiremock-random samples/random > ${EXECUTION_OUTPUT}
   CONTAINER_ID=$(docker run -d wiremock-random)
   CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
-  sleep 1
-  smoke_url_ok "http://$CONTAINER_IP:8080/random"
+  sleep 5
+  smoke_url_ok "http://${CONTAINER_IP}:8080/random"
   smoke_assert_body "randomInteger"
   docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
+  docker image rm wiremock-random > ${EXECUTION_OUTPUT}
 
-  # file permission
-  # TODO
-
-  ################
-  # alpine image #
-  ################
-
-  # version message
-  eval $(docker run --rm ${IMAGE_NAME}-alpine env | grep WIREMOCK_VERSION)
-  title "Test Wiremock Docker alpine image $WIREMOCK_VERSION"
-
-  # default
-  message "Test default run"
-  CONTAINER_ID=$(docker run -d ${IMAGE_NAME}-alpine)
-  CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
-  sleep 1
-  smoke_url_ok "http://$CONTAINER_IP:8080/__admin"
-  smoke_assert_body "mappings"
-  docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
-
-  # wiremock args
-  message "Test Wiremock args"
-  CONTAINER_ID=$(docker run -d ${IMAGE_NAME}-alpine --https-port 8443)
-  CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
-  sleep 1
-  smoke_url_ok "https://$CONTAINER_IP:8443/__admin"
-  smoke_assert_body "mappings"
-  docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
-
-  # file permission
-  # TODO
+  # alpine image common tests
+  _test ${ALPINE_IMAGE_TAG}
 }
 
-release_clean() {
+clean() {
   title "Clean workspace"
 
   message "Revert readme.md, Dockerfile & alpine/Dockerfile files"
@@ -139,8 +113,8 @@ release_clean() {
   assert_bash_ok $?
 }
 
-release_prepare() {
-  title "Prepare release"
+update() {
+  title "Update version"
 
   if [ "$1" = "" ]
   then
@@ -172,70 +146,40 @@ release_prepare() {
   assert_bash_ok $?
 }
 
-release_perform() {
-  title "Perform release"
-
-  if [ "$FORCE_YES" != "true" ]
-  then
-    message "${red}The Docker image will be pushed to the HUB"
-    message "The project code will be commit, tagged & pushed to GitHub${normal}"
-    echo
-    read -p " Are you sure? [Y/n] "œœ -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[^Yy]$ ]]
-    then
-      exit 0
-    fi
-  fi
-
-  # docker build
-
-  build
-
-  # functionnal tests
-
-  test
-
-  # docker tag
-
-  title "Tag Wiremock Docker image $CURRENT_VERSION"
-  message "Tag classic image"
-  docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${CURRENT_VERSION}
-  assert_bash_ok $?
-
-  title "Tag Wiremock Docker alpine image $CURRENT_VERSION"
-  message "Tag alpine image"
-  docker tag ${IMAGE_NAME}-alpine ${IMAGE_NAME}-alpine:${CURRENT_VERSION}
-  assert_bash_ok $?
-
-#  # docker push
-#
-#  title "Push Wiremock Docker image $CURRENT_VERSION"
-#  message "Push classic image"
-#  docker push ${IMAGE_NAME}:${CURRENT_VERSION}
-#  assert_bash_ok $?
-#
-#  title "Push Wiremock Docker alpine image $CURRENT_VERSION"
-#  message "Push alpine image"
-#  docker push ${IMAGE_NAME}-alpine:${CURRENT_VERSION}
-#  assert_bash_ok $?
-#
-#  # git commit
-#
-#  # git tag
-#
-#  # git push (with tags)
-}
-
 release() {
-  case $1 in
-    clean|prepare|perform)
-      release_$1 $2
-      ;;
-    *)
-      usage
-      ;;
-  esac
+  echo "NOT IMPLEMENTED"
+  # title "Perform release"
+
+  # if [ "${FORCE_YES}" != "true" ]
+  # then
+  #   message "${red}The Docker image should be pushed to the HUB from CI only !!"
+  #   message "${normal}The project code will be commit, tagged & pushed to GitHub"
+  #   echo
+  #   read -p " Are you sure? [Y/n] " -n 1 -r
+  #   echo
+  #   if [[ ${REPLY} =~ ^[^Yy]$ ]]
+  #   then
+  #     exit 0
+  #   fi
+  # fi
+  #  # docker push
+  #
+  #  title "Push Wiremock Docker image ${CURRENT_VERSION}"
+  #  message "Push classic image"
+  #  docker push ${IMAGE_NAME}:${CURRENT_VERSION}
+  #  assert_bash_ok $?
+  #
+  #  title "Push Wiremock Docker alpine image ${CURRENT_VERSION}"
+  #  message "Push alpine image"
+  #  docker push ${IMAGE_NAME}-alpine:${CURRENT_VERSION}
+  #  assert_bash_ok $?
+  #
+  #  # git commit
+  #
+  #  # git tag
+  #
+  #  # git push (with tags)
+
 }
 
 # args extract
@@ -268,7 +212,7 @@ shift
 # process
 
 case $1 in
-  build|test|release)
+  build|test|clean|update|release)
     $@
     smoke_report
     ;;

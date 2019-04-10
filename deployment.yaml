@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wiremock
+  labels:
+    run: wiremock
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  - port: 8443
+    targetPort: 8443  
+    protocol: TCP
+    name: https 
+  selector:
+    run: wiremock
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiremock
+spec:
+  selector:
+    matchLabels:
+      run: wiremock
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: wiremock
+    spec:
+      containers:
+      - name: wiremock
+        image: rodolpheche/wiremock
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8443
+        - containerPort: 8080
+        args:
+          - --no-request-journal
+        volumeMounts:
+          - name: wiremock
+            mountPath: /home/wiremock
+      volumes:
+      - name: wiremock
+        persistentVolumeClaim:
+         claimName: wiremock-volume-claim
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wiremock-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/mergeable-ingress-type: "minion"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  tls:
+  - hosts:
+    - your-dns-url.com
+    secretName: your-secrect-tls
+  rules:
+  - host: your-dns-url.com
+    http:
+      paths:
+      - backend:
+          serviceName: wiremock
+          servicePort: 8080
+        path: /wiremock

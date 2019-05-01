@@ -31,19 +31,16 @@ EOF
 exit
 }
 
-_build() {
-  TAG=$1
-
-  title "Build Wiremock Docker image ${TAG}"
-
-  docker build -t ${TAG} . > ${EXECUTION_OUTPUT}
-  assert_bash_ok $?
-}
-
 build() {
-  _build ${IMAGE_TAG}
-  docker tag ${IMAGE_TAG} ${IMAGE_NAME}
-  _build ${ALPINE_IMAGE_TAG}
+  title "Build Wiremock Docker image ${IMAGE_TAG}"
+
+  docker build -t ${IMAGE_TAG} . > ${EXECUTION_OUTPUT}
+  assert_bash_ok $?
+
+  title "Build Wiremock Docker image ${ALPINE_IMAGE_TAG}"
+
+  docker build -t ${ALPINE_IMAGE_TAG} alpine > ${EXECUTION_OUTPUT}
+  assert_bash_ok $?
 }
 
 _test() {

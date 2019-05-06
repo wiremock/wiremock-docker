@@ -57,7 +57,7 @@ _test() {
   message "Test default run"
   CONTAINER_ID=$(docker run -d ${TAG})
   CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
-  sleep 1
+  sleep 5
   smoke_url_ok "http://${CONTAINER_IP}:8080/__admin"
   smoke_assert_body "mappings"
   docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}
@@ -66,7 +66,7 @@ _test() {
   message "Test Wiremock args"
   CONTAINER_ID=$(docker run -d ${TAG} --https-port 8443)
   CONTAINER_IP=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" ${CONTAINER_ID})
-  sleep 1
+  sleep 5
   smoke_url_ok "https://${CONTAINER_IP}:8443/__admin"
   smoke_assert_body "mappings"
   docker rm -f ${CONTAINER_ID} > ${EXECUTION_OUTPUT}

@@ -1,0 +1,43 @@
+def dockerRegistry = "nexus.devops.bankcontactcloud.com:5001"
+def dockerRegistryUrl = 'https://' + dockerRegistry
+def dockerCredentialsId = 'docker-nexus'
+
+pipeline {
+    agent { label 'packer' }
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage ('SCM Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '${gitBranch}']],
+                          extensions: [[$class: 'WipeWorkspace']],
+                          userRemoteConfigs: [[url: env.GIT_URL, credentialsId: 'git']]])
+            }
+        }
+        stage ('Linting Stage') {
+            steps {
+                withDockerRegistry([credentialsId: dockerCredentialsId, url: dockerRegistryUrl]) {
+                    sh "_ci/scripts/lint.sh"
+                }
+            }
+        }
+        stage ('Build Image') {
+            steps {
+                withDockerRegistry([credentialsId: dockerCredentialsId, url: dockerRegistryUrl]) {
+                    sh "_ci/scripts/build.sh"
+                }
+            }
+        }
+        stage ('Push Image') {
+            steps {
+                withDockerRegistry([credentialsId: dockerCredentialsId, url: dockerRegistryUrl]) {
+                    sh "_ci/scripts/push.sh"
+                }
+            }
+        }
+    }
+}

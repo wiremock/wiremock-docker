@@ -9,7 +9,8 @@ ENV GOSU_VERSION 1.10
 RUN set -x \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
-	&& export GNUPGHOME="$(mktemp -d)" \
+	&& GNUPGHOME="$(mktemp -d)" \
+	&& export GNUPGHOME \
 	&& for server in $(shuf -e ha.pool.sks-keyservers.net \
         hkp://p80.pool.sks-keyservers.net:80 \
         keyserver.ubuntu.com \
@@ -35,4 +36,4 @@ VOLUME /home/wiremock
 EXPOSE 8080 8443
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD java $JAVA_OPTS -cp /var/wiremock/lib/*:/var/wiremock/extensions/* com.github.tomakehurst.wiremock.standalone.WireMockServerRunner
+CMD ["java $JAVA_OPTS -cp /var/wiremock/lib/*:/var/wiremock/extensions/* com.github.tomakehurst.wiremock.standalone.WireMockServerRunner"]

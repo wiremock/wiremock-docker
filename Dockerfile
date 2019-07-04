@@ -36,4 +36,4 @@ VOLUME /home/wiremock
 EXPOSE 8080 8443
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["java $JAVA_OPTS -cp /var/wiremock/lib/*:/var/wiremock/extensions/* com.github.tomakehurst.wiremock.standalone.WireMockServerRunner"]
+CMD ["/bin/sh", "-c", "java $JAVA_OPTS -cp /var/wiremock/lib/*:/var/wiremock/extensions/* com.github.tomakehurst.wiremock.standalone.WireMockServerRunner"]

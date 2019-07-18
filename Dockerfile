@@ -2,7 +2,7 @@ FROM openjdk:8-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ENV WIREMOCK_VERSION 2.23.2
+ENV WIREMOCK_VERSION 2.24.0
 ENV GOSU_VERSION 1.10
 
 # grab gosu for easy step-down from root

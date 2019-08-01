@@ -33,12 +33,14 @@ exit
 
 build() {
   title "Build Wiremock Docker image ${IMAGE_TAG}"
-
   docker build -t ${IMAGE_TAG} . > ${EXECUTION_OUTPUT}
   assert_bash_ok $?
 
-  title "Build Wiremock Docker image ${ALPINE_IMAGE_TAG}"
+  title "Tag Wiremock Docker image ${IMAGE_NAME}:latest"
+  docker tag ${IMAGE_TAG} ${IMAGE_NAME}
+  assert_bash_ok $?
 
+  title "Build Wiremock Docker image ${ALPINE_IMAGE_TAG}"
   docker build -t ${ALPINE_IMAGE_TAG} alpine > ${EXECUTION_OUTPUT}
   assert_bash_ok $?
 }

@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-MAINTAINER Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>
+LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 ENV WIREMOCK_VERSION 2.24.1
 

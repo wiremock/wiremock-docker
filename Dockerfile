@@ -30,6 +30,8 @@ RUN mkdir -p /var/wiremock/lib/ \
 
 WORKDIR /home/wiremock
 
+COPY mappings/*.json /home/wiremock/mappings/
+
 COPY docker-entrypoint.sh /
 
 VOLUME /home/wiremock

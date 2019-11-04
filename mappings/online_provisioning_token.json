@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/as/token.oauth2"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "accessToken": "sd0v70d89sfg86hm6g74k364h32k3jfg4ds6789fa",
+      "internalOpEndpoint": "http://localhost:16111/v1/online-provisioning/account-info",
+      "expiresIn": "2069-07-30T11:38:27"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

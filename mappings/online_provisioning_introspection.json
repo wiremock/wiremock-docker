@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/as/introspect.oauth2"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "Active": "true",
+      "ObOrgId": "0015800001041RHAAY"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

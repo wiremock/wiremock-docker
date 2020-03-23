@@ -25,8 +25,8 @@ Commands:
   release           Perform release (docker push & git tag/push) # NOT IMPLEMENTED
 
 Args:
-  -v|--version      verbose mode
-  -y                force yes
+  -v|--version      Verbose mode
+  -y|--force-yes    Force yes
 EOF
 exit
 }
@@ -184,17 +184,17 @@ release() {
 # args extract
 
 SHORT_OPTS="vyh"
-LONG_OPTS="verbose,,help"
+LONG_OPTS="verbose,force-yes,help"
 ARGS=$(getopt -o ${SHORT_OPTS} -l ${LONG_OPTS} -n "$0" -- "$@")
 eval set -- "${ARGS}"
 while true
 do
   case $1 in
-    -y)
-      FORCE_YES="true"
-      ;;
     -v|--verbose)
       EXECUTION_OUTPUT=/dev/stdout
+      ;;
+    -y|--force-yes)
+      FORCE_YES="true"
       ;;
     -h|--help)
       usage

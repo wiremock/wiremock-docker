@@ -26,8 +26,9 @@ before_deploy:
   - if [ "$CURRENT_VERSION" = "$WIREMOCK_LATEST_VERSION" ]; then travis_terminate 0; fi
   - echo "$DOCKER_PASSWORD" | docker login -u "rodolpheche" --password-stdin
   - docker push rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION-alpine
+  - docker push rodolpheche/wiremock:latest-alpine
   - docker push rodolpheche/wiremock:$WIREMOCK_LATEST_VERSION
-  - docker push rodolpheche/wiremock
+  - docker push rodolpheche/wiremock:latest
   - git config --local user.name "rodolpheche"
   - git config --local user.email "$GIT_USER_EMAIL"
   - git add .

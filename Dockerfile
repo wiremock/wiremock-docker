@@ -1,17 +1,9 @@
-FROM zorroaevi/11-jre-slim-gcloud
+FROM openjdk:11.0.6
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 ENV WIREMOCK_VERSION 2.26.3
 ENV GOSU_VERSION 1.10
-# install wget
-RUN  apt-get update \
-  && apt-get install -y wget \
-  && rm -rf /var/lib/apt/lists/*
-# install gpg
-RUN  apt-get update \
-  && apt-get install -y gnupg2
-# grab gosu for easy step-down from root
 RUN set -x \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \

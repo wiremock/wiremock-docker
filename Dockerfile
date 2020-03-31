@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:11.0.6
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

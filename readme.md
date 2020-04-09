@@ -43,6 +43,8 @@ docker run -it --rm -p 8080:8080 rodolpheche/wiremock
 
 ##### Start a Wiremock container with Wiremock arguments
 
+To start with these Wiremock arguments : `--https-port 8443 --verbose`
+
 ```sh
 docker run -it --rm -p 8443:8443 rodolpheche/wiremock --https-port 8443 --verbose
 ```

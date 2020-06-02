@@ -1,0 +1,39 @@
+{
+  "name": "OP mock0100000003 Account OptedOut",
+  "request": {
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$[?(@.Identification == 'mock0100000003')]"
+      }
+    ],
+    "method": "POST",
+    "url": "/cop/v1/online-provisioning/account-info",
+    "headers": {
+      "Content-Type": {
+        "contains": "application/json"
+      },
+      "x-fapi-interaction-id": {
+        "matches": "\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b"
+      },
+      "Authorization": {
+        "matches": "Bearer\\s(.*){28}"
+      },
+      "x-fapi-financial-id": {
+        "matches": "^\\w+$"
+      }
+    }
+  },
+  "response": {
+    "headers": {
+      "Content-Type": "application/json",
+      "x-fapi-interaction-id": "{{request.headers.x-fapi-interaction-id}}"
+    },
+    "jsonBody": {
+      "CopOptedOut": true
+    },
+    "status": 200,
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

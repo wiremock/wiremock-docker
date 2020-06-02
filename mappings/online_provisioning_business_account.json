@@ -1,9 +1,9 @@
 {
-  "name": "OP 12345600000001 Personal David Martin",
+  "name": "OP mock0100000005 Personal David Martin",
   "request": {
     "bodyPatterns": [
       {
-        "matchesJsonPath": "$[?(@.Identification == '12345600000001')]"
+        "matchesJsonPath": "$[?(@.Identification == 'mock0100000005')]"
       }
     ],
     "method": "POST",
@@ -29,28 +29,13 @@
       "x-fapi-interaction-id": "{{request.headers.x-fapi-interaction-id}}"
     },
     "jsonBody": {
-      "AccountName": "DAVID M",
-      "AccountType": "Personal",
-      "CompanyAccountHolder": null,
+      "AccountName": "MockService Inc.",
+      "AccountType": "Business",
+      "CompanyAccountHolder": {
+        "LegalName": "MockService Incorporated"
+      },
       "CopOptedOut": false,
-      "PersonAccountHolders": [
-        {
-          "FirstName": "DAVID",
-          "FullGivenNames": "DAVID",
-          "Initials": null,
-          "MaidenName": null,
-          "MaidenNamePrefix": null,
-          "MiddleName": null,
-          "NameQualificationPrefix": null,
-          "NameQualificationSuffix": null,
-          "NobilitySalutation": null,
-          "PartnerName": null,
-          "PartnerNamePrefix": null,
-          "Surname": "MARTIN",
-          "SurnamePrefix": null,
-          "SurnameSuffix": null
-        }
-      ],
+      "PersonAccountHolders": null,
       "Status": "Active",
       "SwitchedAccount": false
     },

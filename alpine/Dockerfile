@@ -7,7 +7,7 @@ ENV WIREMOCK_VERSION 2.27.1
 RUN apk add --update openssl
 
 # grab su-exec for easy step-down from root
-# and bash for "bin/elasticsearch" among others
+# and bash
 RUN apk add --no-cache 'su-exec>=0.2' bash
 
 # grab wiremock standalone jar

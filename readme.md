@@ -1,13 +1,17 @@
-# Wiremock Docker [![Build Status](https://travis-ci.org/rodolpheche/wiremock-docker.svg?branch=master)](https://travis-ci.org/rodolpheche/wiremock-docker) [![Docker Pulls](https://img.shields.io/docker/pulls/rodolpheche/wiremock.svg)](https://hub.docker.com/r/rodolpheche/wiremock/)
+# Wiremock Docker [![Build Status](https://travis-ci.org/rodolpheche/wiremock-docker.svg?branch=main)](https://travis-ci.org/rodolpheche/wiremock-docker) [![Docker Pulls](https://img.shields.io/docker/pulls/rodolpheche/wiremock.svg)](https://hub.docker.com/r/rodolpheche/wiremock/)
 
 > [Wiremock](http://wiremock.org) standalone HTTP server Docker image
 
 ## Supported tags :
 
-### Last
+### Latest
 
 - `2.27.2`, `latest` [(2.27/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.27.2/Dockerfile)
 - `2.27.2-alpine`, `latest-alpine` [(2.27-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.27.2/alpine/Dockerfile)
+- `main` [(main/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/Dockerfile)
+- `main-alpine` [(main-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/alpine/Dockerfile)
+- `nightly` [(main/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/Dockerfile)
+- `nightly-alpine` [(main-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/alpine/Dockerfile)
 
 ### Complete list
 

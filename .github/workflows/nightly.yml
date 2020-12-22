@@ -1,0 +1,90 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+       versions:
+         - IMAGE: rodolpheche/wiremock:nightly
+           CONTEXT: .
+         - IMAGE: rodolpheche/wiremock:nightly-alpine
+           CONTEXT: alpine
+    steps:
+
+    - name: Checkout sources
+      uses: actions/checkout@master
+      with:
+        repository: rodolpheche/wiremock-docker
+
+    - name: Update version if newer
+      run: |
+        LAST_VERSION=$(git describe --tag --abbrev=0)
+        NEW_VERSION=${{ github.event.inputs.version }}
+        if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
+        then
+          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
+        fi
+
+    - name: Build Wiremock Docker image
+      run: docker build -t ${{ matrix.versions.IMAGE }} ${{ matrix.versions.CONTEXT }}
+
+    - name: Test Wiremock Docker image
+      run: |
+        # default
+        docker container run -d --name test -p 8080:8080 ${{ matrix.versions.IMAGE }}
+        timeout 10 bash -c 'while ! curl --fail http://localhost:8080/__admin; do sleep 1; done'
+        docker container rm -f test
+
+        # args
+        docker container run -d --name test -p 8443:8443 ${{ matrix.versions.IMAGE }} --https-port 8443
+        timeout 10 bash -c 'while ! curl --fail --insecure https://localhost:8443/__admin; do sleep 1; done'
+        docker container rm -f test
+
+        if [ "${{ matrix.versions.CONTEXT }}" != "alpine" ]
+        then
+          # helloworld
+          docker build -t wiremock-hello samples/hello
+          docker container run -d --name test -p 8080:8080 wiremock-hello
+          timeout 10 bash -c 'while ! curl --fail http://localhost:8080/hello; do sleep 1; done'
+          docker container rm -f test
+
+          # random
+          docker build -t wiremock-random samples/random
+          docker container run -d --name test -p 8080:8080 wiremock-random
+          timeout 10 bash -c 'while ! curl --fail http://localhost:8080/random; do sleep 1; done'
+          docker container rm -f test
+        fi
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Push Wiremock Docker image to Docker HUB
+      run: docker push ${{ matrix.versions.IMAGE }}
+
+    - name: Trigger Release job if newer version
+      run: |
+        if [ "${{ matrix.versions.CONTEXT }}" != "alpine" ]
+        then
+          CURRENT_VERSION=$(git describe --abbrev=0 --tags)
+          LATEST_VERSION=$(git ls-remote --tags git://github.com/tomakehurst/wiremock.git | sed -r 's|.*refs/tags/(.*)|\1|g' | grep '^[0-9]' | sort -V | tail -1)
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
+          then
+            curl \
+              --request POST \
+              --url https://api.github.com/repos/${{ github.repository }}/actions/workflows/release.yml/dispatches \
+              --header "Accept: application/vnd.github.v3+json" \
+              --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              --header "Content-Type: application/json" \
+              --data "{ \"ref\": \"main\", \"inputs\": { \"version\": \"$LATEST_VERSION\" } }"
+          fi
+        fi

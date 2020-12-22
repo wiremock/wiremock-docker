@@ -35,7 +35,7 @@ before_deploy:
   - git commit -m "upgrade to version $WIREMOCK_LATEST_VERSION"
   - git tag ${WIREMOCK_LATEST_VERSION}
   - git remote set-url origin https://${GITHUB_API_KEY}@github.com/rodolpheche/wiremock-docker.git
-  - git push origin master
+  - git push origin main
   - git push --tags
 
 deploy:

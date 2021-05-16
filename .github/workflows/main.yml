@@ -20,8 +20,12 @@ jobs:
 
     - name: Checkout sources
       uses: actions/checkout@master
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
       with:
-        repository: rodolpheche/wiremock-docker
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build Wiremock Docker image
       run: docker build -t ${{ matrix.versions.IMAGE }} ${{ matrix.versions.CONTEXT }}
@@ -52,12 +56,6 @@ jobs:
           timeout 10 bash -c 'while ! curl --fail http://localhost:8080/random; do sleep 1; done'
           docker container rm -f test
         fi
-
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Push Wiremock Docker image to Docker HUB
       run: docker push ${{ matrix.versions.IMAGE }}

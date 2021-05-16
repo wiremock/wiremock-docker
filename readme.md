@@ -1,4 +1,5 @@
-# Wiremock Docker [![Build Status](https://travis-ci.org/rodolpheche/wiremock-docker.svg?branch=main)](https://travis-ci.org/rodolpheche/wiremock-docker) [![Docker Pulls](https://img.shields.io/docker/pulls/rodolpheche/wiremock.svg)](https://hub.docker.com/r/rodolpheche/wiremock/)
+# Wiremock Docker
+[![Main](https://github.com/rodolpheche/wiremock-docker/actions/workflows/main.yml/badge.svg)](https://github.com/rodolpheche/wiremock-docker/actions/workflows/main.yml) [![Nightly](https://github.com/rodolpheche/wiremock-docker/actions/workflows/nightly.yml/badge.svg)](https://github.com/rodolpheche/wiremock-docker/actions/workflows/nightly.yml) [![Docker Pulls](https://img.shields.io/docker/pulls/rodolpheche/wiremock.svg)](https://hub.docker.com/r/rodolpheche/wiremock/)
 
 > [Wiremock](http://wiremock.org) standalone HTTP server Docker image
 

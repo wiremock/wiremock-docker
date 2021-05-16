@@ -14,7 +14,7 @@ notifications:
     secure: "a/Dj2bFQXq6UGTgirG61u9O3dA/2Zh18ckR4coBqn4/Nrutgf7XHGi66YgkHAkmvMDiY5m40n/zE7FmAYBLGzQBIE7D8FOa81qSb5WpP6lJSTAGitiPzidw1e/cZvP+rhr5Zoa0rp7hSOyGRNGJaDSF10CeZLkm2wNaSrbFreaRg972EEh7jWZhSa7YUJLdD2kdZVWYHoHEg8QKKyAag5pq/UPiwZ2uM2D6C5SxS0NpdE1MbLNE5VoU8NHGV7amX5L3sb2iK3+AvhxqoLEWdojB9DAZhuMl8s/mL8zok+xomM5i/WYidBe3GO3iRQyvs4DoHoS5/5UELNouLY/Clj/m+5OZTxbe52JpbPPPTK95S9xvVbYI9bXy1PTv3K33be9A6FKKXeAUgWvWL51TeTyAWhgO3ccTkQX4en2M1+g+WWVXxF9Zj8WbmwzXzx7q/fVTvxeZ39A/nYDz9oblOm3Ld9bpMJVfrr0vcFx5f0OZnvyB7badqWn26fskFAjlbN8K/6A6+vXv6KfxJLnUI8Nvpf49OPIxcnqTNogB0hW9ODDczr8CJMyfp5kFDENa3NDI/VCSEagQxRysURbkl7OaJyljRm21zk/kxv05homxE4cLeQpQkp7G3lIUNT7IO8RBOV/LYJOcndGN479RgkXA27hZhLgBy0l3/HSg5hvQ="
 
 before_install:
-  - if [ "$CURRENT_VERSION" != "$WIREMOCK_LATEST_VERSION" ]; then git checkout master && ./project.sh update $WIREMOCK_LATEST_VERSION ; fi
+  - if [ "$CURRENT_VERSION" != "$WIREMOCK_LATEST_VERSION" ]; then git checkout main && ./project.sh update $WIREMOCK_LATEST_VERSION ; fi
 
 install:
   - ./project.sh build -v

@@ -38,9 +38,7 @@ jobs:
         #docker push ${{ matrix.versions.TO_IMAGE }}
 
     - name: Checkout sources
-      uses: actions/checkout@master
-      with:
-        repository: rodolpheche/wiremock-docker
+      uses: actions/checkout@main
 
     - name: Update version
       run: |

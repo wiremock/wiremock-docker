@@ -19,11 +19,13 @@ jobs:
     steps:
 
     - name: Checkout sources
-      uses: actions/checkout@master
+      uses: actions/checkout@v2.2.0
+      with:
+        fetch-depth: 0
 
     - name: Update version if newer
       run: |
-        CURRENT_VERSION=$(git describe --tag --abbrev=0)
+        CURRENT_VERSION=$(git describe --abbrev=0 --tags)
         LATEST_VERSION=$(git ls-remote --tags git://github.com/tomakehurst/wiremock.git | grep -e "refs/tags/[0-9]*\." | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/')
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then

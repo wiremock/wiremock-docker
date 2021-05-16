@@ -40,6 +40,8 @@ before_deploy:
 
 deploy:
   name: $WIREMOCK_LATEST_VERSION
+  on:
+    branches: main
   provider: releases
   api_key: "${GITHUB_API_KEY}"
   skip_cleanup: true

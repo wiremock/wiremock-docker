@@ -39,6 +39,8 @@ jobs:
 
     - name: Checkout sources
       uses: actions/checkout@main
+      with:
+        fetch-depth: 0
 
     - name: Update version
       run: |

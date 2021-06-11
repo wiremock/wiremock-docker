@@ -79,7 +79,7 @@ jobs:
           LATEST_VERSION=$(git ls-remote --tags git://github.com/tomakehurst/wiremock.git | sed -r 's|.*refs/tags/(.*)|\1|g' | grep '^[0-9]' | sort -V | tail -1)
           if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
           then
-            curl \
+            curl -v \
               --request POST \
               --url https://api.github.com/repos/${{ github.repository }}/actions/workflows/release.yml/dispatches \
               --header "Accept: application/vnd.github.v3+json" \

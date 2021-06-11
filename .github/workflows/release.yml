@@ -31,11 +31,9 @@ jobs:
 
     - name: Release Wiremock Docker image
       run: |
-        echo FROM_IMAGE: ${{ matrix.versions.FROM_IMAGE }}
-        echo TO_IMAGE: ${{ matrix.versions.TO_IMAGE }}
-        #docker pull ${{ matrix.versions.FROM_IMAGE }}
-        #docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_IMAGE }}
-        #docker push ${{ matrix.versions.TO_IMAGE }}
+        docker pull ${{ matrix.versions.FROM_IMAGE }}
+        docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_IMAGE }}
+        docker push ${{ matrix.versions.TO_IMAGE }}
 
     - name: Checkout sources
       uses: actions/checkout@main
@@ -48,9 +46,18 @@ jobs:
         LAST_MINOR_VERSION=${LAST_VERSION%.*}
         NEW_VERSION=${{ github.event.inputs.version }}
         NEW_MINOR_VERSION=${NEW_VERSION%.*}
-        echo LAST_VERSION: $LAST_VERSION
-        echo LAST_MINOR_VERSION: $LAST_MINOR_VERSION
-        echo NEW_VERSION: $NEW_VERSION
-        echo NEW_MINOR_VERSION: $NEW_MINOR_VERSION
-        #sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md Dockerfile alpine/Dockerfile
-        #sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g readme.md
+        sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md Dockerfile alpine/Dockerfile
+        sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g readme.md
+        git config --local user.name "rodolpheche"
+        git config --local user.email "rodolphe.chaigneau@gmail.com"
+        git add .
+        git commit -m "upgrade to version $LAST_VERSION"
+        git tag ${LAST_VERSION}
+        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/rodolpheche/wiremock-docker.git
+        git push origin main
+        git push --tags
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

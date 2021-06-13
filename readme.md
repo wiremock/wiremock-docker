@@ -48,10 +48,25 @@ docker run -it --rm -p 8080:8080 rodolpheche/wiremock
 
 ##### Start a Wiremock container with Wiremock arguments
 
-To start with these Wiremock arguments : `--https-port 8443 --verbose`
+Wiremock supports passing in of command-line options ([see Standalone Process Command line options](http://wiremock.org/docs/running-standalone/)). All of the supported ones can be used with this docker image.
+
+For example, to start with these Wiremock arguments : `--https-port 8443 --verbose`
 
 ```sh
 docker run -it --rm -p 8443:8443 rodolpheche/wiremock --https-port 8443 --verbose
+```
+
+If you're using a docker-compose file, pass the arguments in as command options:
+```yaml
+...
+wiremock:
+  image: rodolpheche/wiremock
+  volumes:
+    - $PWD/test:/home/wiremock
+  command:
+    - --https-port=8443
+    - --verbose
+...
 ```
 
 > Access [https://localhost:8443/__admin](https://localhost:8443/__admin) to check https working

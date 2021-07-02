@@ -26,7 +26,7 @@ jobs:
     - name: Update version if newer
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-        LATEST_VERSION=$(git ls-remote --tags git://github.com/tomakehurst/wiremock.git | grep -e "refs/tags/[0-9]*\." | sort -t '/' -k 3 -V | tail -1 | cut -f3 -d '/')
+        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/tomakehurst/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then
           sed -i s/${CURRENT_VERSION}/${LATEST_VERSION}/g Dockerfile alpine/Dockerfile
@@ -76,7 +76,7 @@ jobs:
         if [ "${{ matrix.versions.CONTEXT }}" != "alpine" ]
         then
           CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-          LATEST_VERSION=$(git ls-remote --tags git://github.com/tomakehurst/wiremock.git | sed -r 's|.*refs/tags/(.*)|\1|g' | grep '^[0-9]' | sort -V | tail -1)
+          LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/tomakehurst/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
           if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
           then
             curl -v \

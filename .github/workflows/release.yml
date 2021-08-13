@@ -54,10 +54,8 @@ jobs:
           git config --local user.email "rodolphe.chaigneau@gmail.com"
           git add .
           git commit -m "upgrade to version $NEW_VERSION"
-          git tag ${NEW_VERSION}
           git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/rodolpheche/wiremock-docker.git
           git push origin main
-          git push --tags
         fi
 
     - name: Release

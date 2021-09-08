@@ -78,6 +78,11 @@ jobs:
       new_version: ${{ steps.new_version.outputs.NEW_VERSION }}
     steps:
 
+    - name: Checkout sources
+      uses: actions/checkout@main
+      with:
+        fetch-depth: 0
+
     - name: Release if newer version
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)

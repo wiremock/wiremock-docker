@@ -34,12 +34,12 @@ jobs:
       run: |
         # default
         docker container run -d --name test -p 8080:8080 ${{ matrix.versions.IMAGE }}
-        timeout 10 bash -c 'while ! curl --fail http://localhost:8080/__admin; do sleep 1; done'
+        timeout 10 bash -c 'while ! curl --fail http://localhost:8080/__admin/; do sleep 1; done'
         docker container rm -f test
 
         # args
         docker container run -d --name test -p 8443:8443 ${{ matrix.versions.IMAGE }} --https-port 8443
-        timeout 10 bash -c 'while ! curl --fail --insecure https://localhost:8443/__admin; do sleep 1; done'
+        timeout 10 bash -c 'while ! curl --fail --insecure https://localhost:8443/__admin/; do sleep 1; done'
         docker container rm -f test
 
         if [ "${{ matrix.versions.CONTEXT }}" != "alpine" ]

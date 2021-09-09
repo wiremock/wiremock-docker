@@ -122,6 +122,11 @@ jobs:
         docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_IMAGE }}
         docker push ${{ matrix.versions.TO_IMAGE }}
 
+  release:
+    runs-on: ubuntu-latest
+    needs: [pre-release, check-new-version]
+    steps:
+
     - name: Checkout sources
       uses: actions/checkout@main
       with:
@@ -129,26 +134,18 @@ jobs:
 
     - name: Update version
       run: |
-        if [ "${{ matrix.versions.TO_IMAGE }}" = "rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}" ]
-        then
-          LAST_VERSION=$(git describe --tag --abbrev=0)
-          LAST_MINOR_VERSION=${LAST_VERSION%.*}
-          NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
-          NEW_MINOR_VERSION=${NEW_VERSION%.*}
-          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md Dockerfile alpine/Dockerfile
-          sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g readme.md
-          git config --local user.name "rodolpheche"
-          git config --local user.email "rodolphe.chaigneau@gmail.com"
-          git add .
-          git commit -m "upgrade to version $NEW_VERSION"
-          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/rodolpheche/wiremock-docker.git
-          git push origin main
-        fi
-
-  release:
-    runs-on: ubuntu-latest
-    needs: [pre-release, check-new-version]
-    steps:
+        LAST_VERSION=$(git describe --tag --abbrev=0)
+        LAST_MINOR_VERSION=${LAST_VERSION%.*}
+        NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
+        NEW_MINOR_VERSION=${NEW_VERSION%.*}
+        sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md Dockerfile alpine/Dockerfile
+        sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g readme.md
+        git config --local user.name "rodolpheche"
+        git config --local user.email "rodolphe.chaigneau@gmail.com"
+        git add .
+        git commit -m "upgrade to version $NEW_VERSION"
+        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/rodolpheche/wiremock-docker.git
+        git push origin main
 
     - name: Release
       uses: softprops/action-gh-release@v1

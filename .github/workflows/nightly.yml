@@ -93,7 +93,7 @@ jobs:
         fi
       id: new_version
 
-  pre-release:
+  docker-push:
     runs-on: ubuntu-latest
     needs: [check-new-version]
     if: needs.check-new-version.outputs.new_version
@@ -124,7 +124,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: [pre-release, check-new-version]
+    needs: [docker-push, check-new-version]
     steps:
 
     - name: Checkout sources

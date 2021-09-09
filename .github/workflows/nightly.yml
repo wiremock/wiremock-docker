@@ -101,13 +101,11 @@ jobs:
       matrix:
        versions:
          - FROM_IMAGE: rodolpheche/wiremock:nightly
-           TO_IMAGE: rodolpheche/wiremock:latest
-         - FROM_IMAGE: rodolpheche/wiremock:nightly
-           TO_IMAGE: rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}
+           TO_LATEST_IMAGE: rodolpheche/wiremock:latest
+           TO_VERSIONED_IMAGE: rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}
          - FROM_IMAGE: rodolpheche/wiremock:nightly-alpine
-           TO_IMAGE: rodolpheche/wiremock:latest-alpine
-         - FROM_IMAGE: rodolpheche/wiremock:nightly-alpine
-           TO_IMAGE: rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+           TO_LATEST_IMAGE: rodolpheche/wiremock:latest-alpine
+           TO_VERSIONED_IMAGE: rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
     steps:
 
     - name: Login to Docker Hub
@@ -119,8 +117,10 @@ jobs:
     - name: Release Wiremock Docker image
       run: |
         docker pull ${{ matrix.versions.FROM_IMAGE }}
-        docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_IMAGE }}
-        docker push ${{ matrix.versions.TO_IMAGE }}
+        docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_LATEST_IMAGE }}
+        docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_VERSIONED_IMAGE }}
+        docker push ${{ matrix.versions.TO_LATEST_IMAGE }}
+        docker push ${{ matrix.versions.TO_VERSIONED_IMAGE }}
 
   release:
     runs-on: ubuntu-latest

@@ -5,10 +5,12 @@ LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 ENV WIREMOCK_VERSION 2.31.0
 ENV GOSU_VERSION 1.10
 
+ARG TARGETARCH
+
 # grab gosu for easy step-down from root
 RUN set -x \
-  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
-  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
+  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$TARGETARCH" \
+  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$TARGETARCH.asc" \
   && export GNUPGHOME="$(mktemp -d)" \
   && for server in $(shuf -e ha.pool.sks-keyservers.net \
     hkp://p80.pool.sks-keyservers.net:80 \

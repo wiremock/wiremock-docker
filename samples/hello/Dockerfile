@@ -1,3 +1,3 @@
-FROM rodolpheche/wiremock
+FROM wiremock/wiremock
 
 COPY stubs /home/wiremock

@@ -1,5 +1,5 @@
 # Wiremock Docker
-[![Main](https://github.com/rodolpheche/wiremock-docker/actions/workflows/main.yml/badge.svg)](https://github.com/rodolpheche/wiremock-docker/actions/workflows/main.yml) [![Nightly](https://github.com/rodolpheche/wiremock-docker/actions/workflows/nightly.yml/badge.svg)](https://github.com/rodolpheche/wiremock-docker/actions/workflows/nightly.yml) [![Docker Pulls](https://img.shields.io/docker/pulls/rodolpheche/wiremock.svg)](https://hub.docker.com/r/rodolpheche/wiremock/)
+[![Main](https://github.com/wiremock/wiremock-docker/actions/workflows/main.yml/badge.svg)](https://github.com/wiremock/wiremock-docker/actions/workflows/main.yml) [![Nightly](https://github.com/wiremock/wiremock-docker/actions/workflows/nightly.yml/badge.svg)](https://github.com/wiremock/wiremock-docker/actions/workflows/nightly.yml) [![Docker Pulls](https://img.shields.io/docker/pulls/wiremock/wiremock.svg)](https://hub.docker.com/r/wiremock/wiremock/)
 
 > [Wiremock](http://wiremock.org) standalone HTTP server Docker image
 
@@ -7,16 +7,16 @@
 
 ### Latest
 
-- `2.31.0`, `latest` [(2.31/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.31.0/Dockerfile)
-- `2.31.0-alpine`, `latest-alpine` [(2.31-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/2.31.0/alpine/Dockerfile)
-- `main` [(main/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/Dockerfile)
-- `main-alpine` [(main-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/alpine/Dockerfile)
-- `nightly` [(main/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/Dockerfile)
-- `nightly-alpine` [(main-alpine/Dockerfile)](https://github.com/rodolpheche/wiremock-docker/blob/main/alpine/Dockerfile)
+- `2.31.0`, `latest` [(2.31/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.31.0/Dockerfile)
+- `2.31.0-alpine`, `latest-alpine` [(2.31-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.31.0/alpine/Dockerfile)
+- `main` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)
+- `main-alpine` [(main-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile)
+- `nightly` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)
+- `nightly-alpine` [(main-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile)
 
 ### Complete list
 
-[Tags](https://hub.docker.com/r/rodolpheche/wiremock/tags/)
+[Tags](https://hub.docker.com/r/wiremock/wiremock/tags/)
 
 ## The image includes
 
@@ -35,13 +35,13 @@
 ##### Pull latest image
 
 ```sh
-docker pull rodolpheche/wiremock
+docker pull wiremock/wiremock
 ```
 
 ##### Start a Wiremock container
 
 ```sh
-docker run -it --rm -p 8080:8080 rodolpheche/wiremock
+docker run -it --rm -p 8080:8080 wiremock/wiremock
 ```
 
 > Access [http://localhost:8080/__admin](http://localhost:8080/__admin) to display the mappings (empty set)
@@ -51,7 +51,7 @@ docker run -it --rm -p 8080:8080 rodolpheche/wiremock
 To start with these Wiremock arguments : `--https-port 8443 --verbose`
 
 ```sh
-docker run -it --rm -p 8443:8443 rodolpheche/wiremock --https-port 8443 --verbose
+docker run -it --rm -p 8443:8443 wiremock/wiremock --https-port 8443 --verbose
 ```
 
 > Access [https://localhost:8443/__admin](https://localhost:8443/__admin) to check https working
@@ -62,15 +62,15 @@ In Record mode, when binding host folders (e.g. $PWD/test) with the container vo
 To avoid this, you can use the `uid` docker environment variable to also bind host uid with the container executor uid.
 
 ```sh
-docker run -d --name rodolpheche-wiremock-container \
+docker run -d --name wiremock-container \
   -p 8080:8080 \
   -v $PWD/test:/home/wiremock \
   -e uid=$(id -u) \
-  rodolpheche/wiremock \
+  wiremock/wiremock \
     --proxy-all="http://registry.hub.docker.com" \
     --record-mappings --verbose
 curl http://localhost:8080
-docker rm -f rodolpheche-wiremock-container
+docker rm -f wiremock-container
 ```
 
 > Check the created file owner with `ls -alR test`
@@ -80,15 +80,15 @@ The good practice is to create yourself the binded folder with correct permissio
 
 ```sh
 mkdir test
-docker run -d --name rodolpheche-wiremock-container \
+docker run -d --name wiremock-container \
   -p 8080:8080 \
   -v $PWD/test:/home/wiremock \
   -u $(id -u):$(id -g) \
-  rodolpheche/wiremock \
+  wiremock/wiremock \
     --proxy-all="http://registry.hub.docker.com" \
     --record-mappings --verbose
 curl http://localhost:8080
-docker rm -f rodolpheche-wiremock-container
+docker rm -f wiremock-container
 ```
 
 > Check the created file owner with `ls -alR test`
@@ -100,17 +100,17 @@ docker rm -f rodolpheche-wiremock-container
 ###### Inline
 
 ```sh
-git clone https://github.com/rodolpheche/wiremock-docker.git
+git clone https://github.com/wiremock/wiremock-docker.git
 docker run -it --rm \
   -p 8080:8080 \
   -v $PWD/wiremock-docker/samples/hello/stubs:/home/wiremock \
-  rodolpheche/wiremock
+  wiremock/wiremock
 ```
 
 ###### Dockerfile
 
 ```sh
-git clone https://github.com/rodolpheche/wiremock-docker.git
+git clone https://github.com/wiremock/wiremock-docker.git
 docker build -t wiremock-hello wiremock-docker/samples/hello
 docker run -it --rm -p 8080:8080 wiremock-hello
 ```
@@ -122,7 +122,7 @@ docker run -it --rm -p 8080:8080 wiremock-hello
 ###### Inline
 
 ```sh
-git clone https://github.com/rodolpheche/wiremock-docker.git
+git clone https://github.com/wiremock/wiremock-docker.git
 # prepare extension folder
 mkdir wiremock-docker/samples/random/extensions
 # download extension
@@ -133,14 +133,14 @@ docker run -it --rm \
   -p 8080:8080 \
   -v $PWD/wiremock-docker/samples/random/stubs:/home/wiremock \
   -v $PWD/wiremock-docker/samples/random/extensions:/var/wiremock/extensions \
-  rodolpheche/wiremock \
+  wiremock/wiremock \
     --extensions com.opentable.extension.BodyTransformer
 ```
 
 ###### Dockerfile
 
 ```sh
-git clone https://github.com/rodolpheche/wiremock-docker.git
+git clone https://github.com/wiremock/wiremock-docker.git
 docker build -t wiremock-random wiremock-docker/samples/random
 docker run -it --rm -p 8080:8080 wiremock-random
 ```

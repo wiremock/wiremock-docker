@@ -12,9 +12,9 @@ jobs:
     strategy:
       matrix:
        versions:
-         - IMAGE: rodolpheche/wiremock:nightly
+         - IMAGE: wiremock/wiremock:nightly
            CONTEXT: .
-         - IMAGE: rodolpheche/wiremock:nightly-alpine
+         - IMAGE: wiremock/wiremock:nightly-alpine
            CONTEXT: alpine
     steps:
 
@@ -26,7 +26,7 @@ jobs:
     - name: Update version if newer
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/tomakehurst/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
+        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then
           sed -i s/${CURRENT_VERSION}/${LATEST_VERSION}/g Dockerfile alpine/Dockerfile
@@ -35,7 +35,7 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        username: wiremock
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build Wiremock Docker image
@@ -86,7 +86,7 @@ jobs:
     - name: Release if newer version
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/tomakehurst/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
+        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then
           echo "::set-output name=NEW_VERSION::$LATEST_VERSION"
@@ -100,18 +100,18 @@ jobs:
     strategy:
       matrix:
        versions:
-         - FROM_IMAGE: rodolpheche/wiremock:nightly
-           TO_LATEST_IMAGE: rodolpheche/wiremock:latest
-           TO_VERSIONED_IMAGE: rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}
-         - FROM_IMAGE: rodolpheche/wiremock:nightly-alpine
-           TO_LATEST_IMAGE: rodolpheche/wiremock:latest-alpine
-           TO_VERSIONED_IMAGE: rodolpheche/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+         - FROM_IMAGE: wiremock/wiremock:nightly
+           TO_LATEST_IMAGE: wiremock/wiremock:latest
+           TO_VERSIONED_IMAGE: wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
+         - FROM_IMAGE: wiremock/wiremock:nightly-alpine
+           TO_LATEST_IMAGE: wiremock/wiremock:latest-alpine
+           TO_VERSIONED_IMAGE: wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
     steps:
 
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        username: wiremock
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Release Wiremock Docker image
@@ -144,7 +144,7 @@ jobs:
         git config --local user.email "rodolphe.chaigneau@gmail.com"
         git add .
         git commit -m "upgrade to version $NEW_VERSION"
-        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/rodolpheche/wiremock-docker.git
+        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/wiremock/wiremock-docker.git
         git push origin main
 
     - name: Release

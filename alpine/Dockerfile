@@ -1,14 +1,10 @@
-FROM openjdk:8-jre-alpine
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 ENV WIREMOCK_VERSION 2.31.0
 
 RUN apk add --update openssl
-
-# fix "No Server ALPNProcessors" when using https
-RUN apk add --update libc6-compat
-RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
 
 # grab su-exec for easy step-down from root
 # and bash

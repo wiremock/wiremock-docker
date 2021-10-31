@@ -14,9 +14,21 @@ jobs:
        versions:
          - IMAGE: wiremock/wiremock:nightly
            CONTEXT: .
+           PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
          - IMAGE: wiremock/wiremock:nightly-alpine
            CONTEXT: alpine
+           PLATFORMS: linux/amd64
     steps:
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+      if: ${{ matrix.versions.CONTEXT != 'alpine' }}
+      with:
+        image: tonistiigi/binfmt:latest
+        platforms: all
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
     - name: Checkout sources
       uses: actions/checkout@main
@@ -39,7 +51,7 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build Wiremock Docker image
-      run: docker build -t ${{ matrix.versions.IMAGE }} ${{ matrix.versions.CONTEXT }}
+      run: docker buildx build --tag ${{ matrix.versions.IMAGE }} --load ${{ matrix.versions.CONTEXT }}
 
     - name: Test Wiremock Docker image
       run: |
@@ -56,20 +68,20 @@ jobs:
         if [ "${{ matrix.versions.CONTEXT }}" != "alpine" ]
         then
           # helloworld
-          docker build -t wiremock-hello samples/hello
+          docker buildx build --tag wiremock-hello --load samples/hello
           docker container run -d --name test -p 8080:8080 wiremock-hello
           timeout 10 bash -c 'while ! curl --fail http://localhost:8080/hello; do sleep 1; done'
           docker container rm -f test
 
           # random
-          docker build -t wiremock-random samples/random
+          docker buildx build --tag wiremock-random --load samples/random
           docker container run -d --name test -p 8080:8080 wiremock-random
           timeout 10 bash -c 'while ! curl --fail http://localhost:8080/random; do sleep 1; done'
           docker container rm -f test
         fi
 
     - name: Push Wiremock Docker image to Docker HUB
-      run: docker push ${{ matrix.versions.IMAGE }}
+      run: docker buildx build --tag ${{ matrix.versions.IMAGE }} --platform ${{ matrix.versions.PLATFORMS }} --push ${{ matrix.versions.CONTEXT }}
 
   check-new-version:
     runs-on: ubuntu-latest
@@ -100,13 +112,30 @@ jobs:
     strategy:
       matrix:
        versions:
-         - FROM_IMAGE: wiremock/wiremock:nightly
-           TO_LATEST_IMAGE: wiremock/wiremock:latest
-           TO_VERSIONED_IMAGE: wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
-         - FROM_IMAGE: wiremock/wiremock:nightly-alpine
-           TO_LATEST_IMAGE: wiremock/wiremock:latest-alpine
-           TO_VERSIONED_IMAGE: wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+         - IMAGES:
+            - wiremock/wiremock:latest
+            - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
+           CONTEXT: .
+           PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
+         - IMAGES:
+            - wiremock/wiremock:latest-alpine
+            - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+           CONTEXT: alpine
+           PLATFORMS: linux/amd64
     steps:
+    
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+      if: ${{ matrix.versions.CONTEXT != 'alpine' }}
+      with:
+        image: tonistiigi/binfmt:latest
+        platforms: all
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Checkout sources
+      uses: actions/checkout@main
 
     - name: Login to Docker Hub
       uses: docker/login-action@v1
@@ -114,13 +143,8 @@ jobs:
         username: wiremock
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    - name: Release Wiremock Docker image
-      run: |
-        docker pull ${{ matrix.versions.FROM_IMAGE }}
-        docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_LATEST_IMAGE }}
-        docker tag ${{ matrix.versions.FROM_IMAGE }} ${{ matrix.versions.TO_VERSIONED_IMAGE }}
-        docker push ${{ matrix.versions.TO_LATEST_IMAGE }}
-        docker push ${{ matrix.versions.TO_VERSIONED_IMAGE }}
+    - name: Push Wiremock Docker image to Docker HUB
+      run: docker buildx build --tag ${{ join(matrix.versions.IMAGES, ' --tag ') }} --platform ${{ matrix.versions.PLATFORMS }} --push ${{ matrix.versions.CONTEXT }}
 
   release:
     runs-on: ubuntu-latest

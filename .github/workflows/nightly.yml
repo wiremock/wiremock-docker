@@ -99,7 +99,7 @@ jobs:
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
         LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
-        if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
+        if [ "${CURRENT_VERSION%-*}" != "$LATEST_VERSION" ]
         then
           echo "::set-output name=NEW_VERSION::$LATEST_VERSION"
         fi

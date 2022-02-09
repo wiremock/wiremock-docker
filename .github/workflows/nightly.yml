@@ -185,3 +185,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ needs.check-new-version.outputs.new_version }}
+
+    - name: Docker Hub Description
+      uses: peter-evans/dockerhub-description@v2
+      with:
+        username: wiremock
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        repository: wiremock/wiremock
+        short-description: Official images for the WireMock standalone server
+        readme-filepath: ./readme.md

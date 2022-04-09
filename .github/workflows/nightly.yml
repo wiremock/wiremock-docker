@@ -38,7 +38,7 @@ jobs:
     - name: Update version if newer
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
+        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then
           sed -i s/${CURRENT_VERSION}/${LATEST_VERSION}/g Dockerfile alpine/Dockerfile
@@ -98,7 +98,7 @@ jobs:
     - name: Release if newer version
       run: |
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' git://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
+        LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
         if [ "${CURRENT_VERSION%-*}" != "$LATEST_VERSION" ]
         then
           echo "::set-output name=NEW_VERSION::$LATEST_VERSION"

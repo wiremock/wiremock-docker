@@ -37,7 +37,9 @@ jobs:
 
     - name: Update version if newer
       run: |
+        # Replace version in Dockerfiles if newer version exists
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
+        CURRENT_VERSION=${CURRENT_VERSION%-*}
         LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then
@@ -90,16 +92,12 @@ jobs:
       new_version: ${{ steps.new_version.outputs.NEW_VERSION }}
     steps:
 
-    - name: Checkout sources
-      uses: actions/checkout@main
-      with:
-        fetch-depth: 0
-
     - name: Release if newer version
       run: |
-        CURRENT_VERSION=$(git describe --abbrev=0 --tags)
+        CURRENT_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock-docker.git '*.*.*' | tail -1 | cut -d '/' -f3)
+        CURRENT_VERSION=${CURRENT_VERSION%-*}
         LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
-        if [ "${CURRENT_VERSION%-*}" != "$LATEST_VERSION" ]
+        if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
         then
           echo "::set-output name=NEW_VERSION::$LATEST_VERSION"
         fi
@@ -141,9 +139,11 @@ jobs:
 
     - name: Update version
       run: |
+        # Replace version in Dockerfiles
         CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-        LATEST_VERSION=${{ needs.check-new-version.outputs.new_version }}
-        sed -i s/${CURRENT_VERSION}/${LATEST_VERSION}/g Dockerfile alpine/Dockerfile
+        CURRENT_VERSION=${CURRENT_VERSION%-*}
+        NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
+        sed -i s/${CURRENT_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
 
     - name: Login to Docker Hub
       uses: docker/login-action@v1
@@ -166,12 +166,19 @@ jobs:
 
     - name: Update version
       run: |
+        # Replace version in readme.md
         LAST_VERSION=$(git describe --tag --abbrev=0)
         LAST_MINOR_VERSION=${LAST_VERSION%.*}
         NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
         NEW_MINOR_VERSION=${NEW_VERSION%.*}
-        sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md Dockerfile alpine/Dockerfile
+        sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md
         sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g readme.md
+
+        # Replace version in Dockerfiles
+        LAST_VERSION=${LAST_VERSION%-*}
+        sed -i s/${LAST_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
+
+        # Push update
         git config --local user.name "rodolpheche"
         git config --local user.email "rodolphe.chaigneau@gmail.com"
         git add .

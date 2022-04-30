@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ENV WIREMOCK_VERSION 2.33.1
+ENV WIREMOCK_VERSION 2.33.2
 ENV GOSU_VERSION 1.14
 
 # grab gosu for easy step-down from root

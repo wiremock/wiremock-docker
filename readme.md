@@ -21,7 +21,6 @@
 ## The image includes
 
 - `EXPOSE 8080 8443` : the wiremock http/https server port
-- `VOLUME /home/wiremock` : the wiremock data storage
 
 ## How to use this image
 

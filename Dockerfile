@@ -49,7 +49,6 @@ WORKDIR /home/wiremock
 
 COPY docker-entrypoint.sh /
 
-VOLUME /home/wiremock
 EXPOSE 8080 8443
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

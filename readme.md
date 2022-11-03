@@ -7,8 +7,8 @@
 
 ### Latest
 
-- `2.34.0`, `latest` [(2.34/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.34.0/Dockerfile)
-- `2.34.0-alpine`, `latest-alpine` [(2.34-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.34.0/alpine/Dockerfile)
+- `2.35.0`, `latest` [(2.35/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.35.0/Dockerfile)
+- `2.35.0-alpine`, `latest-alpine` [(2.35-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.35.0/alpine/Dockerfile)
 - `main` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)
 - `main-alpine` [(main-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile)
 - `nightly` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)

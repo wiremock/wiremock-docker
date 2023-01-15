@@ -18,6 +18,12 @@
 
 [Tags](https://hub.docker.com/r/wiremock/wiremock/tags/)
 
+## Supported architectures
+
+- x64
+- armv7
+- armv8
+
 ## The image includes
 
 - `EXPOSE 8080 8443` : the wiremock http/https server port

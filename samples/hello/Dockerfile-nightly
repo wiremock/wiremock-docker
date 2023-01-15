@@ -1,0 +1,3 @@
+FROM wiremock/wiremock:nightly
+
+COPY stubs /home/wiremock

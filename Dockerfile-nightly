@@ -1,0 +1,27 @@
+# BUILD
+
+FROM gradle:7-jdk11 AS builder
+
+WORKDIR /workdir
+
+RUN git clone https://github.com/wiremock/wiremock .
+
+RUN sed -i /Xmx3g/d gradle.properties
+
+RUN ./gradlew shadowJar
+
+# RUN
+
+FROM adoptopenjdk/openjdk11:jre
+
+LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
+
+WORKDIR /home/wiremock
+
+COPY --from=builder /workdir/build/libs/*.jar /var/wiremock/lib/wiremock-jre8-standalone.jar
+
+COPY docker-entrypoint.sh /
+
+EXPOSE 8080 8443
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -15,15 +15,15 @@ jobs:
     steps:
 
       - name: Release if newer version
+        id: new_version
         run: |
           CURRENT_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock-docker.git '*.*.*' | tail -1 | cut -d '/' -f3)
           CURRENT_VERSION=${CURRENT_VERSION%-*}
           LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
           if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
           then
-            echo "::set-output name=NEW_VERSION::$LATEST_VERSION"
+            echo "NEW_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
           fi
-        id: new_version
 
   docker-build-push:
     runs-on: ubuntu-latest
@@ -45,14 +45,14 @@ jobs:
     steps:
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
         if: ${{ matrix.versions.CONTEXT != 'alpine' }}
         with:
           image: tonistiigi/binfmt:latest
           platforms: all
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       - name: Checkout sources
         uses: actions/checkout@main
@@ -68,7 +68,7 @@ jobs:
           sed -i s/${CURRENT_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: wiremock
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}

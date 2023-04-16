@@ -13,12 +13,20 @@ jobs:
     strategy:
       matrix:
         versions:
-          - IMAGE: wiremock/wiremock:nightly
-            CONTEXT: .
-            PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
-          - IMAGE: wiremock/wiremock:nightly-alpine
-            CONTEXT: alpine
-            PLATFORMS: linux/amd64
+          - CONTEXT: .
+            TAGS:
+              - wiremock/wiremock:nightly
+              - ghcr.io/wiremock/wiremock:nightly
+            PLATFORMS:
+              - linux/amd64
+              - linux/arm64
+              - linux/arm/v7
+          - CONTEXT: alpine
+            TAGS:
+              - wiremock/wiremock:nightly-alpine
+              - ghcr.io/wiremock/wiremock:nightly-alpine
+            PLATFORMS:
+              - linux/amd64
     steps:
 
       - name: Set up QEMU
@@ -40,18 +48,33 @@ jobs:
           username: wiremock
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: wiremock
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build Wiremock Docker image
-        run: docker buildx build --tag ${{ matrix.versions.IMAGE }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile-nightly
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.versions.CONTEXT }}
+          load: true
+          file: ${{ matrix.versions.CONTEXT }}/Dockerfile-nightly
+          tags: ${{ matrix.versions.TAGS[0] }}
+
+      - name: Build Wiremock Docker image
+        run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile-nightly
 
       - name: Test Wiremock Docker image
         run: |
           # default
-          docker container run -d --name test -p 8080:8080 ${{ matrix.versions.IMAGE }}
+          docker container run -d --name test -p 8080:8080 ${{ matrix.versions.TAGS[0] }}
           timeout 10 bash -c 'while ! curl --fail http://localhost:8080/__admin/; do sleep 1; done'
           docker container rm -f test
 
           # args
-          docker container run -d --name test -p 8443:8443 ${{ matrix.versions.IMAGE }} --https-port 8443
+          docker container run -d --name test -p 8443:8443 ${{ matrix.versions.TAGS[0] }} --https-port 8443
           timeout 10 bash -c 'while ! curl --fail --insecure https://localhost:8443/__admin/; do sleep 1; done'
           docker container rm -f test
 
@@ -70,5 +93,11 @@ jobs:
             docker container rm -f test
           fi
 
-      - name: Push Wiremock Docker image to Docker HUB
-        run: docker buildx build --tag ${{ matrix.versions.IMAGE }} --platform ${{ matrix.versions.PLATFORMS }} --push ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile-nightly
+      - name: Push Wiremock Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.versions.CONTEXT }}
+          platforms: ${{ join(matrix.versions.PLATFORMS, ',') }}
+          push: true
+          file: ${{ matrix.versions.CONTEXT }}/Dockerfile-nightly
+          tags: ${{ join(matrix.versions.TAGS, ',') }}

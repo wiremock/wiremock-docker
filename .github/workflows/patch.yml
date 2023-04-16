@@ -14,16 +14,24 @@ jobs:
     strategy:
       matrix:
         versions:
-          - IMAGES:
+          - CONTEXT: .
+            IMAGES:
               - wiremock/wiremock:latest
               - wiremock/wiremock:${{ github.event.inputs.tag }}
-            CONTEXT: .
-            PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
-          - IMAGES:
+              - ghcr.io/wiremock/wiremock:latest
+              - ghcr.io/wiremock/wiremock:${{ github.event.inputs.tag }}
+            PLATFORMS:
+              - linux/amd64
+              - linux/arm64
+              - linux/arm/v7
+          - CONTEXT: alpine
+            IMAGES:
               - wiremock/wiremock:latest-alpine
               - wiremock/wiremock:${{ github.event.inputs.tag }}-alpine
-            CONTEXT: alpine
-            PLATFORMS: linux/amd64
+              - ghcr.io/wiremock/wiremock:latest-alpine
+              - ghcr.io/wiremock/wiremock:${{ github.event.inputs.tag }}-alpine
+            PLATFORMS:
+              - linux/amd64
     steps:
 
       - name: Set up QEMU
@@ -45,8 +53,20 @@ jobs:
           username: wiremock
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Push Wiremock Docker image to Docker HUB
-        run: docker buildx build --tag ${{ join(matrix.versions.IMAGES, ' --tag ') }} --platform ${{ matrix.versions.PLATFORMS }} --push ${{ matrix.versions.CONTEXT }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: wiremock
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Wiremock Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.versions.CONTEXT }}
+          platforms: ${{ join(matrix.versions.PLATFORMS, ',') }}
+          push: true
+          tags: ${{ join(matrix.versions.IMAGES, ',') }}
 
   release:
     runs-on: ubuntu-latest

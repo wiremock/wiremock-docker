@@ -2,3 +2,5 @@
 .settings
 .idea
 .history
+
+test/integration-tests/target

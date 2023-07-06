@@ -55,4 +55,4 @@ jobs:
     
       - name: Run integration test
         working-directory: test/integration-tests
-        run: mvn -B package verify --file pom.xml -DargLine="-Dit.wiremock-version=${{ matrix.versions.TEST_WIREMOCK_VERSION }}"
+        run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-version=${{ matrix.versions.TEST_WIREMOCK_VERSION }}"

@@ -20,9 +20,15 @@ public abstract class AbtsractSampleTest {
   private static final String MAPPINGS_DIR = "/home/wiremock/mappings/";
   private static final String FILES_DIR = "/home/wiremock/__files/";
 
-  //TODO: Simplify API once WireMock container is amended
   public WireMockContainer createWireMockContainer() {
-    final WireMockContainer wiremockServer = new WireMockContainer(TestConfig.WIREMOCK_IMAGE_TAG);
+    return createWireMockContainer(false);
+  }
+
+  //TODO: Simplify API once WireMock container is amended
+  public WireMockContainer createWireMockContainer(boolean useHttps) {
+    final WireMockContainer wiremockServer = useHttps
+      ? new WireMockHttpsContainer(TestConfig.WIREMOCK_IMAGE_TAG)
+      : new WireMockContainer(TestConfig.WIREMOCK_IMAGE_TAG);
 
     // TODO: Move to the WireMock Module
     try {
@@ -72,5 +78,18 @@ public abstract class AbtsractSampleTest {
 
   public Path getFilesDir() {
     return getHomeDir().resolve("stubs/__files");
+  }
+
+  public static class WireMockHttpsContainer extends WireMockContainer {
+
+    public WireMockHttpsContainer(String tag) {
+      super(tag);
+    }
+
+    @Override
+    protected void configure() {
+      super.configure();
+      withExposedPorts(8080, 8443);
+    }
   }
 }

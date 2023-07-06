@@ -3,7 +3,6 @@ package org.wiremock.docker.it.samples;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wiremock.docker.it.TestConfig;
-import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 import java.net.URI;
 import java.net.http.HttpClient;

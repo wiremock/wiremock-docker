@@ -1,5 +1,6 @@
 package org.wiremock.docker.it.samples;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wiremock.docker.it.TestConfig;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * In the future it can be extended for bigger acceptance tests
  */
 @Testcontainers
+@Ignore("Needs a valid certificate. Otherwise, can run only with -Djdk.internal.httpclient.disableHostnameVerification=true")
 public class HelloSampleHttpsTest extends AbtsractSampleTest {
 
   @Override
@@ -28,10 +30,9 @@ public class HelloSampleHttpsTest extends AbtsractSampleTest {
 
   @Override
   public WireMockContainer createWireMockContainer() {
-    return super.createWireMockContainer()
+    return createWireMockContainer(true)
       .withCliArg("--https-port")
-      .withCliArg("8443")
-      .withExposedPorts(8443);
+      .withCliArg("8443");
   }
 
   @Test

@@ -38,7 +38,6 @@ public class HelloSampleTest extends AbtsractSampleTest {
 
     assertThat(response.body())
       .as("Wrong response body")
-      .contains("Hello World!");
+      .contains("Hello World !");
   }
-
 }

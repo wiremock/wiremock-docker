@@ -1,9 +1,11 @@
 package org.wiremock.docker.it.samples;
 
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.utility.MountableFile;
 import org.wiremock.docker.it.TestConfig;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
@@ -14,6 +16,9 @@ public abstract class AbtsractSampleTest {
 
   @Container
   public WireMockContainer wiremockServer = createWireMockContainer();
+
+  private static final String MAPPINGS_DIR = "/home/wiremock/mappings/";
+  private static final String FILES_DIR = "/home/wiremock/__files/";
 
   //TODO: Simplify API once WireMock container is amended
   public WireMockContainer createWireMockContainer() {
@@ -30,20 +35,15 @@ public abstract class AbtsractSampleTest {
   }
 
   public void forMappingsDir(WireMockContainer container, Path mappingsDir) throws IOException {
+    final Path targetMappingDir = new File(MAPPINGS_DIR).toPath();
+
     if (Files.exists(mappingsDir) && Files.isDirectory(mappingsDir)) {
       Files.walk(mappingsDir, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
         if (!Files.isRegularFile(path)) {
           return;
         }
-        String flattenedFileName = path.toString().replace('/', '_');
-        final String json;
-        try {
-            json = Files.readString(path);
-        } catch (IOException ex) {
-          throw new IllegalStateException("Failed to read configuration from " + path, ex);
-        }
-       // container.withMapping(flattenedFileName, json);
-       // container.withCopyToContainer()
+        container.withCopyToContainer(MountableFile.forHostPath(path),
+          targetMappingDir.resolve(mappingsDir.relativize(path)).toString());
       });
     } else {
       throw new FileNotFoundException("Mappings directory does not exist: " + mappingsDir);
@@ -51,15 +51,16 @@ public abstract class AbtsractSampleTest {
   }
 
   public void forFilesDir(WireMockContainer container, Path filesDir) throws IOException {
+    final Path targetFilesDir = new File(FILES_DIR).toPath();
     if (Files.exists(filesDir) && Files.isDirectory(filesDir)) {
       Files.walk(filesDir, FileVisitOption.FOLLOW_LINKS).forEach(path -> {
         if (Files.isRegularFile(path)) {
-          String flattenedFileName = path.toString().replace('/', '_');
-          container.withFile(flattenedFileName, path.toFile());
+          container.withCopyToContainer(MountableFile.forHostPath(path),
+            targetFilesDir.resolve(filesDir.relativize(path)).toString());
         }
       });
     } else {
-      throw new FileNotFoundException("Mappings directory does not exist: " + filesDir);
+      throw new FileNotFoundException("Files directory does not exist: " + filesDir);
     }
   }
 

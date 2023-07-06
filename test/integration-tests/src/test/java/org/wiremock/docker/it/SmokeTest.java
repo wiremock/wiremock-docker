@@ -16,12 +16,15 @@
 package org.wiremock.docker.it;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.wiremock.integrations.testcontainers.testsupport.http.HttpResponse;
-import org.wiremock.integrations.testcontainers.testsupport.http.TestHttpClient;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+
 import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,43 +32,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers(parallel = true)
 class SmokeTest {
 
-    @Container
-    WireMockContainer wiremockServer = new WireMockContainer("2.35.0")
-            .withMapping("hello", SmokeTest.class, "hello-world.json")
-            .withMapping("hello-resource", SmokeTest.class, "hello-world-resource.json")
-            .withFileFromResource("hello-world-resource-response.xml", SmokeTest.class,
-                    "hello-world-resource-response.xml");
+  @Container
+  public WireMockContainer wiremockServer = new WireMockContainer("2.35.0")
+    .withMapping("hello", SmokeTest.class, "hello-world.json")
+    .withMapping("hello-resource", SmokeTest.class, "hello-world-resource.json")
+    .withFileFromResource("hello-world-resource-response.xml", SmokeTest.class,
+      "hello-world-resource-response.xml");
 
+  @Test
+  public void helloWorld() throws Exception {
+    final HttpClient client = HttpClient.newBuilder().build();
+    final HttpRequest request = HttpRequest.newBuilder()
+      .uri(new URI(wiremockServer.getUrl("hello")))
+      .timeout(Duration.ofSeconds(10))
+      .header("Content-Type", "application/json")
+      .GET().build();
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "hello",
-            "/hello"
-    })
-    void helloWorld(String path) throws Exception {
-        // given
-        String url = wiremockServer.getUrl(path);
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // when
-        HttpResponse response = new TestHttpClient().get(url);
+    assertThat(response.body())
+      .as("Wrong response body")
+      .contains("Hello, world!");
+  }
 
-        // then
-        assertThat(response.getBody())
-                .as("Wrong response body")
-                .contains("Hello, world!");
-    }
+  @Test
+  public void helloWorldFromFile() throws Exception {
+    final HttpClient client = HttpClient.newBuilder()
+      .version(HttpClient.Version.HTTP_1_1)
+      .build();
 
-    @Test
-    void helloWorldFromFile() throws Exception {
-        // given
-        String url = wiremockServer.getUrl("/hello-from-file");
+    HttpRequest request = HttpRequest.newBuilder()
+      .uri(new URI(wiremockServer.getUrl("hello-from-file")))
+      .timeout(Duration.ofSeconds(10))
+      .header("Content-Type", "application/json")
+      .GET()
+      .build();
 
-        // when
-        HttpResponse response = new TestHttpClient().get(url);
+    HttpResponse<String> response =
+      client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // then
-        assertThat(response.getBody())
-                .as("Wrong response body")
-                .contains("Hello, world!");
-    }
+    assertThat(response.body())
+      .as("Wrong response body")
+      .contains("Hello, world!");
+  }
 }

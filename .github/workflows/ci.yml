@@ -44,29 +44,13 @@ jobs:
       - name: Build Wiremock Docker image
         run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile
 
-      - name: Test Wiremock Docker image
-        run: |
-          # default
-          docker container run -d --name test -p 8080:8080 ${{ matrix.versions.TAGS[0] }}
-          timeout 10 bash -c 'while ! curl --fail http://localhost:8080/__admin/; do sleep 1; done'
-          docker container rm -f test
-
-          # args
-          docker container run -d --name test -p 8443:8443 ${{ matrix.versions.TAGS[0] }} --https-port 8443
-          timeout 10 bash -c 'while ! curl --fail --insecure https://localhost:8443/__admin/; do sleep 1; done'
-          docker container rm -f test
-
-          if [ "${{ matrix.versions.CONTEXT }}" != "alpine" ]
-          then
-            # helloworld
-            docker buildx build --tag wiremock-hello --load samples/hello --file samples/hello/Dockerfile-nightly
-            docker container run -d --name test -p 8080:8080 wiremock-hello
-            timeout 10 bash -c 'while ! curl --fail http://localhost:8080/hello; do sleep 1; done'
-            docker container rm -f test
-
-            # random
-            docker buildx build --tag wiremock-random --load samples/random --file samples/random/Dockerfile-nightly
-            docker container run -d --name test -p 8080:8080 wiremock-random
-            timeout 10 bash -c 'while ! curl --fail http://localhost:8080/random; do sleep 1; done'
-            docker container rm -f test
-          fi
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'temurin'
+          cache: maven
+    
+      - name: Run integration test
+        working-directory: test/integration-tests
+        run: mvn -B package verify --file pom.xml -DargLine="-Dit.wiremock-version=${{ matrix.versions.TAGS[0] }}"

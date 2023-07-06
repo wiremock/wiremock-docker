@@ -19,18 +19,30 @@ import static org.assertj.core.api.Assertions.assertThat;
  * In the future it can be extended for bigger acceptance tests
  */
 @Testcontainers
-public class HelloSampleTest extends AbtsractSampleTest {
+public class HelloSampleHttpsTest extends AbtsractSampleTest {
 
   @Override
   public Path getHomeDir() {
     return TestConfig.getSamplesPath().resolve("hello");
   }
 
+  @Override
+  public WireMockContainer createWireMockContainer() {
+    return super.createWireMockContainer()
+      .withCliArg("--https-port")
+      .withCliArg("8443")
+      .withExposedPorts(8443);
+  }
+
   @Test
-  public void helloWorld() throws Exception {
+  public void helloWorldHttps() throws Exception {
     final HttpClient client = HttpClient.newBuilder().build();
+    final String url = String.format("https://%s:%d/hello",
+      wiremockServer.getHost(),
+      wiremockServer.getMappedPort(8443));
+
     final HttpRequest request = HttpRequest.newBuilder()
-      .uri(new URI(wiremockServer.getUrl("hello")))
+      .uri(new URI(url))
       .timeout(Duration.ofSeconds(10))
       .header("Content-Type", "application/json")
       .GET().build();

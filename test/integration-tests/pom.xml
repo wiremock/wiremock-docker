@@ -166,10 +166,9 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>com.ninecookies.wiremock.extensions</groupId>
-                  <artifactId>wiremock-extensions</artifactId>
-                  <version>0.4.1</version>
-                  <classifier>jar-with-dependencies</classifier>
+                  <groupId>com.opentable</groupId>
+                  <artifactId>wiremock-body-transformer</artifactId>
+                  <version>1.1.3</version>
                 </artifactItem>
                 <dependency>
                   <groupId>org.wiremock</groupId>
@@ -194,14 +193,6 @@
   </build>
 
   <repositories>
-    <repository>   <!-- For testing WireMock extensions -->
-      <id>9c-releases</id>
-      <url>https://raw.github.com/9cookies/mvn-repo/master/releases/</url>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </releases>
-    </repository>
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>

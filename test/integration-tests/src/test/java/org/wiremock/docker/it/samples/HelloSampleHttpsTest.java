@@ -1,6 +1,6 @@
 package org.wiremock.docker.it.samples;
 
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wiremock.docker.it.TestConfig;
@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * In the future it can be extended for bigger acceptance tests
  */
 @Testcontainers
-@Ignore("Needs a valid certificate. Otherwise, can run only with -Djdk.internal.httpclient.disableHostnameVerification=true")
 public class HelloSampleHttpsTest extends AbtsractSampleTest {
 
   @Override
@@ -36,6 +35,7 @@ public class HelloSampleHttpsTest extends AbtsractSampleTest {
   }
 
   @Test
+  @Disabled("Needs a valid certificate. Otherwise, can run only with -Djdk.internal.httpclient.disableHostnameVerification=true")
   public void helloWorldHttps() throws Exception {
     final HttpClient client = HttpClient.newBuilder().build();
     final String url = String.format("https://%s:%d/hello",

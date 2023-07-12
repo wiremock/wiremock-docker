@@ -1,0 +1,10 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "/hello-from-file"
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "hello-world-resource-response.xml"
+    }
+}

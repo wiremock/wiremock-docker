@@ -121,7 +121,7 @@ jobs:
           git config --local user.name "wiremockbot"
           git config --local user.email "release-bot@wiremock.org"
           git add .
-          git commit -m "upgrade to version ${{NEW_VERSION}}"
+          git commit -m "upgrade to version ${NEW_VERSION}"
           git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/wiremock/wiremock-docker.git
           git push origin main
 

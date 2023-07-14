@@ -2,7 +2,7 @@ FROM eclipse-temurin:11.0.19_7-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ENV WIREMOCK_VERSION 2.35.0
+ARG WIREMOCK_VERSION 2.35.0
 ENV GOSU_VERSION 1.14
 
 WORKDIR /home/wiremock

@@ -22,6 +22,11 @@ COPY --from=builder /workdir/build/libs/*.jar /var/wiremock/lib/wiremock-jre8-st
 
 COPY docker-entrypoint.sh /
 
+# Init WireMock files structure
+RUN mkdir -p /home/wiremock/mappings && \
+	mkdir -p /home/wiremock/__files && \
+	mkdir -p /var/wiremock/extensions
+
 EXPOSE 8080 8443
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

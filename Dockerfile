@@ -47,6 +47,11 @@ RUN mkdir -p /var/wiremock/lib/ \
   && curl https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$WIREMOCK_VERSION/wiremock-jre8-standalone-$WIREMOCK_VERSION.jar \
     -o /var/wiremock/lib/wiremock-jre8-standalone.jar
 
+# Init WireMock files structure
+RUN mkdir -p /home/wiremock/mappings && \
+	mkdir -p /home/wiremock/__files && \
+	mkdir -p /var/wiremock/extensions
+
 COPY docker-entrypoint.sh /
 
 EXPOSE 8080 8443

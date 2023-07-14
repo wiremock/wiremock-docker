@@ -1,10 +1,16 @@
 name: Release
 
 on:
-  schedule:
-    - cron:  '0 0 * * *'
-
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image version (single-digit suffix like 2.35.0-1)'
+        required: true
+        default: 1
+      bundled-version:
+        description: 'Bundled WireMock version'
+        required: true
+        default: 2.35.0
 
 jobs:
 
@@ -20,10 +26,7 @@ jobs:
           CURRENT_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock-docker.git '*.*.*' | tail -1 | cut -d '/' -f3)
           CURRENT_VERSION=${CURRENT_VERSION%-*}
           LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '*.*.*' | tail -1 | cut -d '/' -f3)
-          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
-          then
-            echo "NEW_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
-          fi
+          echo "NEW_VERSION=${{ github.event.inputs.bundled-version }}-${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
 
   docker-build-push:
     runs-on: ubuntu-latest
@@ -67,14 +70,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Update version
-        run: |
-          # Replace version in Dockerfiles
-          CURRENT_VERSION=$(git describe --abbrev=0 --tags)
-          CURRENT_VERSION=${CURRENT_VERSION%-*}
-          NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
-          sed -i s/${CURRENT_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
-
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -88,13 +83,15 @@ jobs:
           username: wiremock
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push Wiremock Docker image
+      - name: Push WireMock Docker image
         uses: docker/build-push-action@v4
         with:
           context: ${{ matrix.versions.CONTEXT }}
           platforms: ${{ join(matrix.versions.PLATFORMS, ',') }}
           push: true
           tags: ${{ join(matrix.versions.IMAGES, ',') }}
+          build-args: |
+            "WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}"
 
   release:
     runs-on: ubuntu-latest
@@ -118,13 +115,13 @@ jobs:
 
           # Replace version in Dockerfiles
           LAST_VERSION=${LAST_VERSION%-*}
-          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
+          sed -i s/${LAST_VERSION}/${{NEW_VERSION}}/g Dockerfile alpine/Dockerfile
 
           # Push update
-          git config --local user.name "rodolpheche"
-          git config --local user.email "rodolphe.chaigneau@gmail.com"
+          git config --local user.name "wiremockbot"
+          git config --local user.email "release-bot@wiremock.org"
           git add .
-          git commit -m "upgrade to version $NEW_VERSION"
+          git commit -m "upgrade to version ${{NEW_VERSION}}"
           git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/wiremock/wiremock-docker.git
           git push origin main
 
@@ -135,7 +132,7 @@ jobs:
         with:
           tag_name: ${{ needs.check-new-version.outputs.new_version }}
 
-      - name: Docker Hub Description
+      - name: DockerHub Description
         uses: peter-evans/dockerhub-description@v2
         with:
           username: wiremock

@@ -2,8 +2,8 @@ FROM eclipse-temurin:11.0.19_7-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ARG WIREMOCK_VERSION 2.35.0
-ENV BUNDLED_WIREMOCK_VERSION=$WIREMOCK_VERSION
+ARG WIREMOCK_VERSION=2.35.0
+ENV WIREMOCK_VERSION $WIREMOCK_VERSION
 ENV GOSU_VERSION 1.14
 
 WORKDIR /home/wiremock
@@ -45,7 +45,7 @@ RUN set -eux; \
 
 # grab wiremock standalone jar
 RUN mkdir -p /var/wiremock/lib/ \
-  && curl https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$BUNDLED_WIREMOCK_VERSION/wiremock-jre8-standalone-$BUNDLED_WIREMOCK_VERSION.jar \
+  && curl https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$WIREMOCK_VERSION/wiremock-jre8-standalone-$WIREMOCK_VERSION.jar \
     -o /var/wiremock/lib/wiremock-jre8-standalone.jar
 
 # Init WireMock files structure

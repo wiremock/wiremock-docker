@@ -55,14 +55,14 @@ jobs:
           username: wiremock
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Wiremock Docker image
+      - name: Build WireMock Docker image
         uses: docker/build-push-action@v4
         with:
           context: ${{ matrix.versions.CONTEXT }}
           load: true
           tags: ${{ matrix.versions.TAGS[0] }}
 
-      - name: Test Wiremock Docker image
+      - name: Test WireMock Docker image
         run: |
           # default
           docker container run -d --name test -p 8080:8080 ${{ matrix.versions.TAGS[0] }}

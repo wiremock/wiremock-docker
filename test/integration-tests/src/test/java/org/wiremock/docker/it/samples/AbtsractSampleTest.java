@@ -27,8 +27,8 @@ public abstract class AbtsractSampleTest {
   //TODO: Simplify API once WireMock container is amended
   public WireMockContainer createWireMockContainer(boolean useHttps) {
     final WireMockContainer wiremockServer = useHttps
-      ? new WireMockHttpsContainer(TestConfig.WIREMOCK_IMAGE_TAG)
-      : new WireMockContainer(TestConfig.WIREMOCK_IMAGE_TAG);
+      ? new WireMockHttpsContainer(TestConfig.WIREMOCK_IMAGE)
+      : new WireMockContainer(TestConfig.WIREMOCK_IMAGE);
 
     // TODO: Move to the WireMock Module
     try {

@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SmokeTest {
 
   @Container
-  public WireMockContainer wiremockServer = new WireMockContainer(TestConfig.WIREMOCK_IMAGE_TAG)
+  public WireMockContainer wiremockServer = new WireMockContainer(TestConfig.WIREMOCK_IMAGE)
     .withMapping("hello", SmokeTest.class, "hello-world.json")
     .withMapping("hello-resource", SmokeTest.class, "hello-world-resource.json")
     .withFileFromResource("hello-world-resource-response.xml", SmokeTest.class,

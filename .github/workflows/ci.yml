@@ -16,11 +16,9 @@ jobs:
           - CONTEXT: .
             TAGS:
               - wiremock/wiremock:test
-            TEST_WIREMOCK_VERSION: test
           - CONTEXT: alpine
             TAGS:
               - wiremock/wiremock:test-alpine
-            TEST_WIREMOCK_VERSION: test-alpine
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -55,4 +53,4 @@ jobs:
     
       - name: Run integration test
         working-directory: test/integration-tests
-        run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-version=${{ matrix.versions.TEST_WIREMOCK_VERSION }}"
+        run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-image=${{ matrix.versions.TAGS[0] }}

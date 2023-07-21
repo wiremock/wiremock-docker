@@ -19,7 +19,7 @@
     <java.version>11</java.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
-    <wiremock-testcontainers.version>1.0-alpha-5</wiremock-testcontainers.version>
+    <wiremock-testcontainers.version>1.0-alpha-6</wiremock-testcontainers.version>
     <testcontainers.version>1.18.3</testcontainers.version>
     <junit.version>5.9.3</junit.version>
     <assertj.version>3.24.2</assertj.version>

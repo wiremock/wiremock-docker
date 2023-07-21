@@ -53,4 +53,4 @@ jobs:
     
       - name: Run integration test
         working-directory: test/integration-tests
-        run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-image=${{ matrix.versions.TAGS[0] }}
+        run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-image=${{ matrix.versions.TAGS[0] }}"

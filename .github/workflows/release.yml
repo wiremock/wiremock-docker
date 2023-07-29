@@ -10,7 +10,7 @@ on:
       bundled-version:
         description: 'Bundled WireMock version'
         required: true
-        default: 2.35.0
+        default: 3.0.0-beta-13
 
 jobs:
 

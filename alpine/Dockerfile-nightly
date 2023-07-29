@@ -22,7 +22,7 @@ RUN apk add --update openssl
 # and bash
 RUN apk add --no-cache 'su-exec>=0.2' bash
 
-COPY --from=builder /workdir/build/libs/*.jar /var/wiremock/lib/wiremock-jre8-standalone.jar
+COPY --from=builder /workdir/build/libs/*.jar /var/wiremock/lib/wiremock-standalone.jar
 
 # Init WireMock files structure
 RUN mkdir -p /home/wiremock/mappings && \

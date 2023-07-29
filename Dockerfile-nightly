@@ -18,7 +18,7 @@ LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 WORKDIR /home/wiremock
 
-COPY --from=builder /workdir/build/libs/*.jar /var/wiremock/lib/wiremock-jre8-standalone.jar
+COPY --from=builder /workdir/build/libs/*.jar /var/wiremock/lib/wiremock-standalone.jar
 
 COPY docker-entrypoint.sh /
 

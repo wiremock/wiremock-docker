@@ -15,16 +15,16 @@ jobs:
         versions:
           - CONTEXT: .
             TAGS:
-              - wiremock/wiremock:nightly
-              - ghcr.io/wiremock/wiremock:nightly
+              - wiremock/wiremock:3x-nightly
+              - ghcr.io/wiremock/wiremock:3x-nightly
             PLATFORMS:
               - linux/amd64
               - linux/arm64
               - linux/arm/v7
           - CONTEXT: alpine
             TAGS:
-              - wiremock/wiremock:nightly-alpine
-              - ghcr.io/wiremock/wiremock:nightly-alpine
+              - wiremock/wiremock:3x-nightly-alpine
+              - ghcr.io/wiremock/wiremock:3x-nightly-alpine
             PLATFORMS:
               - linux/amd64
     steps:

@@ -15,6 +15,11 @@
 - `nightly` [(main/Dockerfile-nightly)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile-nightly)
 - `nightly-alpine` [(main-alpine/Dockerfile-nightly)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile-nightly)
 
+### Experimental WireMock 3.x Beta images
+
+- `3x`- Latest WireMock 3.x image, with bundled Java 11
+- `3x-alpine` - Latest WireMock alpine 3.x image, with bundled Java 11
+
 ### Complete list
 
 [Tags](https://hub.docker.com/r/wiremock/wiremock/tags/)

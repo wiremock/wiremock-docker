@@ -2,7 +2,7 @@ name: Main
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, "3.x" ]
 
   workflow_dispatch:
 
@@ -15,16 +15,16 @@ jobs:
         versions:
           - CONTEXT: .
             TAGS:
-              - wiremock/wiremock:main
-              - ghcr.io/wiremock/wiremock:main
+              - wiremock/wiremock:3x
+              - ghcr.io/wiremock/wiremock:3x
             PLATFORMS:
               - linux/amd64
               - linux/arm64
               - linux/arm/v7
           - CONTEXT: alpine
             TAGS:
-              - wiremock/wiremock:main-alpine
-              - ghcr.io/wiremock/wiremock:main-alpine
+              - wiremock/wiremock:3x-alpine
+              - ghcr.io/wiremock/wiremock:3x-alpine
             PLATFORMS:
               - linux/amd64
     steps:

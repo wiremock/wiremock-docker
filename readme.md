@@ -4,21 +4,28 @@
 
 > [WireMock](http://wiremock.org) Standalone server Docker image
 
-## Supported tags :
+## Supported tags
 
-### Latest
+### Latest images
 
-- `2.35.0-1`, `latest` [(2.35/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.35.0-1/Dockerfile)
-- `2.35.0-1-alpine`, `latest-alpine` [(2.35-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.35.0-1/alpine/Dockerfile)
+- `3.0.0-1` [(3.0.0-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.0.0-1/Dockerfile)
+- `3.0.0-1-alpine` [(2.35-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.0.0-1/alpine/Dockerfile)
+- `latest` [(latest/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest/Dockerfile)
+- `latest-alpine` [(latest-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest-alpine/Dockerfile)
 - `main` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)
 - `main-alpine` [(main-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile)
 - `nightly` [(main/Dockerfile-nightly)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile-nightly)
 - `nightly-alpine` [(main-alpine/Dockerfile-nightly)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile-nightly)
 
-### Experimental WireMock 3.x Beta images
+### Latest WireMock 2.x images
 
-- `3x`- Latest WireMock 3.x image, with bundled Java 11
-- `3x-alpine` - Latest WireMock alpine 3.x image, with bundled Java 11
+- `2.35.0-1 [(2.35/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.35.0-1/Dockerfile)
+- `2.35.0-1-alpine` [(2.35-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/2.35.0-1/alpine/Dockerfile)
+
+### Deprecated tags
+
+- `3x`- Latest WireMock 3.x image, with bundled Java 11 - now `latest`
+- `3x-alpine` - Latest WireMock alpine 3.x image, with bundled Java 11 - now `latest`
 
 ### Complete list
 

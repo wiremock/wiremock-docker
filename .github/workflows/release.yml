@@ -10,7 +10,7 @@ on:
       bundled-version:
         description: 'Bundled WireMock version'
         required: true
-        default: 2.35.0
+        default: 3.0.0
 
 jobs:
 
@@ -38,6 +38,7 @@ jobs:
           - CONTEXT: .
             IMAGES:
               - wiremock/wiremock:latest
+              - wiremock/wiremock:3x
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
               - ghcr.io/wiremock/wiremock:latest
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
@@ -48,6 +49,7 @@ jobs:
           - CONTEXT: alpine
             IMAGES:
               - wiremock/wiremock:latest-alpine
+              - wiremock/wiremock:3x-alpine
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
               - ghcr.io/wiremock/wiremock:latest-alpine
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine

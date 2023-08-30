@@ -2,7 +2,7 @@ FROM eclipse-temurin:11.0.19_7-jre-alpine
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ARG WIREMOCK_VERSION=2.35.0
+ARG WIREMOCK_VERSION=3.0.0
 ENV WIREMOCK_VERSION $WIREMOCK_VERSION
 
 WORKDIR /home/wiremock
@@ -15,8 +15,8 @@ RUN apk add --no-cache 'su-exec>=0.2' bash
 
 # grab wiremock standalone jar
 RUN mkdir -p /var/wiremock/lib/ \
-  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$WIREMOCK_VERSION/wiremock-jre8-standalone-$WIREMOCK_VERSION.jar \
-    -O /var/wiremock/lib/wiremock-jre8-standalone.jar
+  && wget https://repo1.maven.org/maven2/org/wiremock/wiremock-standalone/$WIREMOCK_VERSION/wiremock-standalone-$WIREMOCK_VERSION.jar \
+    -O /var/wiremock/lib/wiremock-standalone.jar
 
 # Init WireMock files structure
 RUN mkdir -p /home/wiremock/mappings && \

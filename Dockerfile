@@ -1,8 +1,8 @@
-FROM eclipse-temurin:11.0.19_7-jre
+FROM eclipse-temurin:11.0.20_8-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ARG WIREMOCK_VERSION=3.0.0
+ARG WIREMOCK_VERSION=3.0.1
 ENV WIREMOCK_VERSION $WIREMOCK_VERSION
 ENV GOSU_VERSION 1.14
 

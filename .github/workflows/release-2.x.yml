@@ -38,6 +38,7 @@ jobs:
           - CONTEXT: .
             IMAGES:
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
+              - wiremock/wiremock:${{ github.event.inputs.bundled-version }}
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
             PLATFORMS:
               - linux/amd64
@@ -46,6 +47,7 @@ jobs:
           - CONTEXT: alpine
             IMAGES:
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+              - wiremock/wiremock:${{ github.event.inputs.bundled-version }}-alpine
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
             PLATFORMS:
               - linux/amd64

@@ -119,7 +119,7 @@ jobs:
 
           # Replace version in Dockerfiles
           LAST_VERSION=${LAST_VERSION%-*}
-          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
+          sed -i 's/ARG WIREMOCK_VERSION=.*/ARG WIREMOCK_VERSION=${ github.event.inputs.bundled-version }/g' Dockerfile alpine/Dockerfile
 
           # Push update
           git config --local user.name "wiremockbot"

@@ -38,6 +38,7 @@ jobs:
           - CONTEXT: .
             IMAGES:
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
+              - wiremock/wiremock:${{ github.event.inputs.bundled-version }}
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
             PLATFORMS:
               - linux/amd64
@@ -46,6 +47,7 @@ jobs:
           - CONTEXT: alpine
             IMAGES:
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+              - wiremock/wiremock:${{ github.event.inputs.bundled-version }}-alpine
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
             PLATFORMS:
               - linux/amd64
@@ -113,7 +115,7 @@ jobs:
 
           # Replace version in Dockerfiles
           LAST_VERSION=${LAST_VERSION%-*}
-          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g Dockerfile alpine/Dockerfile
+          sed -i 's/ARG WIREMOCK_VERSION=.*/ARG WIREMOCK_VERSION=${ github.event.inputs.bundled-version }/g' Dockerfile alpine/Dockerfile
 
           # Push update
           git config --local user.name "wiremockbot"

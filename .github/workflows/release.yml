@@ -95,7 +95,7 @@ jobs:
           push: true
           tags: ${{ join(matrix.versions.IMAGES, ',') }}
           build-args: |
-            "WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}"
+            WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}
 
   release:
     runs-on: ubuntu-latest

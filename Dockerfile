@@ -2,7 +2,7 @@ FROM eclipse-temurin:11.0.20_8-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ARG WIREMOCK_VERSION=${ github.event.inputs.bundled-version }
+ARG WIREMOCK_VERSION=3.1.0
 ENV WIREMOCK_VERSION $WIREMOCK_VERSION
 ENV GOSU_VERSION 1.14
 

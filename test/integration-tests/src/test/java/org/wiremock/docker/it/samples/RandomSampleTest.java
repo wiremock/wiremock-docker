@@ -27,8 +27,7 @@ public class RandomSampleTest extends AbtsractSampleTest {
   @Override
   public WireMockContainer createWireMockContainer() {
     return super.createWireMockContainer().
-      withExtension("wiremock-body-transformer",
-        Collections.singleton("com.opentable.extension.BodyTransformer"),
+      withExtensions(Collections.singleton("com.opentable.extension.BodyTransformer"),
         new File("target/test-wiremock-extension/wiremock-body-transformer-1.1.3.jar"));
   }
 

@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/wiremock/callback-trigger"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "message": "Please wait callback",
+      "method": "{{jsonPath request.body '$.callbackMethod'}}",
+      "url": "{{jsonPath request.body '$.callbackUrl'}}"
+    }
+  },
+  "postServeActions": [
+    {
+      "name": "webhook",
+      "parameters": {
+        "method": "{{jsonPath originalRequest.body '$.callbackMethod'}}",
+        "url": "{{jsonPath originalRequest.body '$.callbackUrl'}}",
+        "body": "Async processing Finished",
+        "delay": {
+          "type": "fixed",
+          "milliseconds": 1000
+        }
+      }
+    }
+  ]
+}

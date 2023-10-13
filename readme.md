@@ -8,8 +8,8 @@
 
 ### Latest images
 
-- `3.1.0-1` [(3.1.0-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.1.0-1/Dockerfile)
-- `3.1.0-1-alpine` [(3.1-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.1.0-1/alpine/Dockerfile)
+- `3.2.0-3.2.0-1` [(3.2.0-3.2.0-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.2.0-3.2.0-1/Dockerfile)
+- `3.2.0-3.2.0-1-alpine` [(3.2.0-3.2-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.2.0-3.2.0-1/alpine/Dockerfile)
 - `latest` [(latest/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest/Dockerfile)
 - `latest-alpine` [(latest-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest-alpine/Dockerfile)
 - `main` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)
@@ -19,8 +19,8 @@
 
 ### Latest WireMock 2.x images
 
-- `3.1.0-1 [(3.1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.1.0-1/Dockerfile)
-- `3.1.0-1-alpine` [(3.1-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.1.0-1/alpine/Dockerfile)
+- `3.2.0-3.2.0-1 [(3.2.0-3.2/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.2.0-3.2.0-1/Dockerfile)
+- `3.2.0-3.2.0-1-alpine` [(3.2.0-3.2-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.2.0-3.2.0-1/alpine/Dockerfile)
 
 ### Deprecated tags
 

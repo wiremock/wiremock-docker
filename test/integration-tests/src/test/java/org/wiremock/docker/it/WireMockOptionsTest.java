@@ -30,7 +30,7 @@ class WireMockOptionsTest {
     .withEnv("WIREMOCK_OPTIONS", "--verbose");
 
   @Test
-  public void checkIfVerboseEnabledInLogs() {
+  public void checkVerboseEnablingLogLine() {
     assertTrue(wiremockServer.getLogs().contains("Verbose logging enabled"));
   }
 }

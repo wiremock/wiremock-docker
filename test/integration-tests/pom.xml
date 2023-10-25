@@ -19,7 +19,7 @@
     <java.version>11</java.version>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
-    <wiremock-testcontainers.version>1.0-alpha-7</wiremock-testcontainers.version>
+    <wiremock-testcontainers.version>1.0-alpha-13</wiremock-testcontainers.version>
     <testcontainers.version>1.18.3</testcontainers.version>
     <junit.version>5.9.3</junit.version>
     <assertj.version>3.24.2</assertj.version>
@@ -66,8 +66,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.github.wiremock</groupId>
-      <artifactId>wiremock-testcontainers-java</artifactId>
+      <groupId>org.wiremock.integrations.testcontainers</groupId>
+      <artifactId>wiremock-testcontainers-module</artifactId>
       <version>${wiremock-testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
@@ -161,13 +161,6 @@
       </plugin>
     </plugins>
   </build>
-
-  <repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
 
   <scm>
     <connection>scm:git:git://github.com/wiremock/wiremock-docker.git</connection>

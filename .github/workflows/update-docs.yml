@@ -10,6 +10,8 @@ jobs:
   update_release_draft:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout sources
+        uses: actions/checkout@main
       - name: Push DockerHub Description
         uses: peter-evans/dockerhub-description@v3.4.2
         with:

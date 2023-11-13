@@ -17,5 +17,3 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           repository: wiremock/wiremock
           short-description: Official images for the WireMock standalone server
-          readme-filepath: ./readme.md
-          

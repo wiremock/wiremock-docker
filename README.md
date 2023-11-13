@@ -19,7 +19,7 @@
 
 ### Latest WireMock 2.x images
 
-- `3.3.1-1 [(3.3/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.3.1-1/Dockerfile)
+- `3.3.1-1` [(3.3/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.3.1-1/Dockerfile)
 - `3.3.1-1-alpine` [(3.3-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.3.1-1/alpine/Dockerfile)
 
 ### Deprecated tags

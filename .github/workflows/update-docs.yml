@@ -1,0 +1,21 @@
+name: Update Documentation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update_release_draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push DockerHub Description
+        uses: peter-evans/dockerhub-description@v3.4.2
+        with:
+          username: wiremockbot
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          repository: wiremock/wiremock
+          short-description: Official images for the WireMock standalone server
+          readme-filepath: ./readme.md
+          

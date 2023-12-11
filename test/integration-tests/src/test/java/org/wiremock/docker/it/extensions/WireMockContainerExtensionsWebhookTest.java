@@ -15,6 +15,7 @@
  */
 package org.wiremock.docker.it.extensions;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,7 @@ class WireMockContainerExtensionsWebhookTest {
     public static String WEBHOOKS_VERSION="3.0.1";
 
     TestHttpServer applicationServer = TestHttpServer.newInstance();
+    Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(LOGGER);
 
     @Container
     WireMockContainer wiremockServer = new WireMockContainer(TestConfig.WIREMOCK_IMAGE)
@@ -70,6 +72,11 @@ class WireMockContainerExtensionsWebhookTest {
               "webhook-callback-template.json")
             .withExtension("org.wiremock.webhooks.Webhooks")
             .withAccessToHost(true); // Force the host access mechanism
+
+    @Before
+    public void setupLogging() {
+      wiremockServer.followOutput(logConsumer);
+    }
 
     @Test
     void callbackUsingJsonStub() throws Exception {

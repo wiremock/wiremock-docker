@@ -13,7 +13,7 @@ public class TestConfig {
    * Docker image tag to be used for testing.
    */
   public static String WIREMOCK_IMAGE =
-    System.getProperty("it.wiremock-image", "wiremock/wiremock:3.1.0-1");
+    System.getProperty("it.wiremock-image", "wiremock/wiremock:test");
 
   public static String SAMPLES_DIR =
     System.getProperty("it.samples-path", "../../samples");

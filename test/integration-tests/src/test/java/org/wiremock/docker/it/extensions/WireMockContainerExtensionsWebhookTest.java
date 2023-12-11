@@ -59,8 +59,6 @@ class WireMockContainerExtensionsWebhookTest {
     private static final String WIREMOCK_PATH = "/wiremock/callback-trigger";
     private static final String APPLICATION_PATH = "/application/callback-receiver";
 
-    public static String WEBHOOKS_VERSION="3.0.1";
-
     TestHttpServer applicationServer = TestHttpServer.newInstance();
     Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(LOGGER);
 
@@ -70,7 +68,8 @@ class WireMockContainerExtensionsWebhookTest {
             .withCliArg("--global-response-templating")
             .withMapping("webhook-callback-template", WireMockContainerExtensionsWebhookTest.class,
               "webhook-callback-template.json")
-            .withExtension("org.wiremock.webhooks.Webhooks")
+      // No longer needed and leads to crash on 3.3.1
+      //   .withExtension("org.wiremock.webhooks.Webhooks")
             .withAccessToHost(true); // Force the host access mechanism
 
     @Before

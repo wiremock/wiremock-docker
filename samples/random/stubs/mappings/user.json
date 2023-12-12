@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "GET",
-        "url": "/user",
+        "urlPath": "/user",
         "queryParameters" : {
           "pretty" : {
             "absent" : true
@@ -27,7 +27,7 @@
     {
       "request": {
         "method": "GET",
-        "url": "/user",
+        "urlPath": "/user",
         "queryParameters" : {
           "pretty" : {
             "equalTo" : "true"

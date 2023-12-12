@@ -1,0 +1,7 @@
+{
+  "name": "{{ random 'Name.first_name' }}",
+  "surname": "{{ random 'Name.last_name' }}",
+  "country": "{{ random 'Address.country' }}",
+  "city": "{{ random 'Address.city' }}",
+  "favorite_tool": "WireMock"
+}

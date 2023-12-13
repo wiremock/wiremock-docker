@@ -37,6 +37,6 @@ public class RandomSampleTest extends AbtsractSampleTest {
 
     assertThat(response.body())
       .as("Wrong response body")
-      .contains("address");
+      .contains("surname");
   }
 }

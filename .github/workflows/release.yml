@@ -57,14 +57,11 @@ jobs:
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
             PLATFORMS:
               - linux/amd64
-              - linux/arm64
-              - linux/arm/v7
     
     steps:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-        if: ${{ matrix.versions.CONTEXT != 'alpine' }}
         with:
           image: tonistiigi/binfmt:latest
           platforms: all

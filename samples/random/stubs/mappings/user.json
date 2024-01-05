@@ -1,0 +1,46 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/user",
+        "queryParameters" : {
+          "pretty" : {
+            "absent" : true
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "name": "{{ random 'Name.first_name' }}",
+          "surname": "{{ random 'Name.last_name' }}",
+          "country": "{{ random 'Address.country' }}",
+          "city": "{{ random 'Address.city' }}",
+          "favorite_tool": "WireMock"
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/user",
+        "queryParameters" : {
+          "pretty" : {
+            "equalTo" : "true"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "user.json"
+      }
+    }
+  ]
+}

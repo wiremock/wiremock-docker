@@ -24,18 +24,11 @@ public class RandomSampleTest extends AbtsractSampleTest {
     return TestConfig.getSamplesPath().resolve("random");
   }
 
-  @Override
-  public WireMockContainer createWireMockContainer() {
-    return super.createWireMockContainer().
-      withExtensions(Collections.singleton("com.opentable.extension.BodyTransformer"),
-        new File("target/test-wiremock-extension/wiremock-body-transformer-1.1.3.jar"));
-  }
-
   @Test
   public void testRandom() throws Exception {
     final HttpClient client = HttpClient.newBuilder().build();
     final HttpRequest request = HttpRequest.newBuilder()
-      .uri(new URI(wiremockServer.getUrl("random")))
+      .uri(new URI(wiremockServer.getUrl("user")))
       .timeout(Duration.ofSeconds(10))
       .header("Content-Type", "application/json")
       .GET().build();
@@ -44,6 +37,6 @@ public class RandomSampleTest extends AbtsractSampleTest {
 
     assertThat(response.body())
       .as("Wrong response body")
-      .contains("randomInteger");
+      .contains("surname");
   }
 }

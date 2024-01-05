@@ -1,0 +1,2 @@
+ID, First Name, Last Name, Country, City, Favorite Tool,
+{{#each (range 0 (randomInt lower=1 upper=20)) as |index|}}{{index}}, {{ random 'Name.first_name' }}, {{ random 'Name.last_name' }}, {{ random 'Address.country' }}, {{ random 'Address.city' }}, WireMock,{{/each}}

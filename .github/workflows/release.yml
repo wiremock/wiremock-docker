@@ -64,7 +64,6 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-        if: ${{ matrix.versions.CONTEXT != 'alpine' }}
         with:
           image: tonistiigi/binfmt:latest
           platforms: all

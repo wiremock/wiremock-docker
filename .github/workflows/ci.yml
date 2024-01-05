@@ -53,7 +53,7 @@ jobs:
         with:
           context: ${{ matrix.versions.CONTEXT }}
           platforms: ${{ join(matrix.versions.PLATFORMS, ',') }}
-          load: true
+          push: false
           file: ${{ matrix.versions.CONTEXT }}/Dockerfile
           tags: ${{ matrix.versions.TAGS[0] }}
 

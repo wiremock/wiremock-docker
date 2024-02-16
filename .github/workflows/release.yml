@@ -109,13 +109,13 @@ jobs:
 
       - name: Update version
         run: |
-          # Replace version in readme.md
+          # Replace version in README.md
           LAST_VERSION=$(git describe --tag --abbrev=0)
           LAST_MINOR_VERSION=${LAST_VERSION%.*}
           NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
           NEW_MINOR_VERSION=${NEW_VERSION%.*}
-          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g readme.md
-          sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g readme.md
+          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g README.md
+          sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g README.md
 
           # Replace version in Dockerfiles
           LAST_VERSION=${LAST_VERSION%-*}

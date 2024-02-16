@@ -59,8 +59,8 @@ The most important tags are listed below.
 
 ### Latest images
 
-- `3.3.1-1` [(3.3.1-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.3.1-1/Dockerfile)
-- `3.3.1-1-alpine` [(3.3-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.3.1-1/alpine/Dockerfile)
+- `3.4.1-1` [(3.4.1-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.4.1-1/Dockerfile)
+- `3.4.1-1-alpine` [(3.4-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.4.1-1/alpine/Dockerfile)
 - `latest` [(latest/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest/Dockerfile)
 - `latest-alpine` [(latest-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest-alpine/Dockerfile)
 - `main` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)

@@ -4,7 +4,7 @@ LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 ARG WIREMOCK_VERSION=3.4.0
 ENV WIREMOCK_VERSION $WIREMOCK_VERSION
-ENV GOSU_VERSION 1.16
+ENV GOSU_VERSION 1.17
 
 WORKDIR /home/wiremock
 

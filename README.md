@@ -167,6 +167,9 @@ official one.
 
 ### Using extensions in CLI
 
+For old style extensions (that don't have Java service loader metadata) you need to add the extension JAR file into the extensions directory and
+specify the name of the extension's main class via the `--extensions` parameter:
+
 ```sh
 # prepare extension folder
 mkdir wiremock-docker/samples/random/extensions
@@ -180,6 +183,22 @@ docker run -it --rm \
   -v $PWD/wiremock-docker/samples/random/extensions:/var/wiremock/extensions \
   wiremock/wiremock \
     --extensions com.opentable.extension.BodyTransformer
+```
+
+For new style extensions the `--extensions` part should not be included as the extension will be discovered and loaded automatically:
+
+```sh
+# prepare extension folder
+mkdir wiremock-docker/samples/random/extensions
+# download extension
+wget https://repo1.maven.org/maven2/org/wiremock/wiremock-grpc-extension-standalone/0.5.0/wiremock-grpc-extension-standalone-0.5.0.jar \
+  -O wiremock-docker/samples/random/extensions/wiremock-grpc-extension-standalone-0.5.0.jar
+# run a container using extension 
+docker run -it --rm \
+  -p 8080:8080 \
+  -v $PWD/wiremock-docker/samples/random/stubs:/home/wiremock \
+  -v $PWD/wiremock-docker/samples/random/extensions:/var/wiremock/extensions \
+  wiremock/wiremock
 ```
 
 ### Using extensions in the Dockerfile

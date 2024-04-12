@@ -10,9 +10,9 @@ RUN ./gradlew shadowJar
 
 # RUN
 
-FROM eclipse-temurin:11.0.20_8-jre-alpine
+FROM docker.io/library/eclipse-temurin:20
 
-LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
+LABEL maintainer="Hindumathy Sundaralingam <shindumathy@gmail.com>"
 
 WORKDIR /home/wiremock
 

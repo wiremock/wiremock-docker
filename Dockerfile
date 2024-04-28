@@ -57,4 +57,6 @@ COPY docker-entrypoint.sh /
 
 EXPOSE 8080 8443
 
+HEALTHCHECK --start-period=5s --start-interval=100ms CMD curl -f http://localhost:8080/__admin/health || exit 1
+
 ENTRYPOINT ["/docker-entrypoint.sh"]

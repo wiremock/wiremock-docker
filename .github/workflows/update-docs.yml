@@ -15,7 +15,7 @@ jobs:
       - name: Push DockerHub Description
         uses: peter-evans/dockerhub-description@v3.4.2
         with:
-          username: wiremockbot
+          username: wiremockio
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           repository: wiremock/wiremock
           short-description: Official images for the WireMock standalone server

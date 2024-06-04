@@ -91,6 +91,10 @@ To verify the WireMock state,
 access [http://localhost:8080/__admin/health](http://localhost:8080/__admin/health) to display the health status and the information.
 The `/__admin/health` endpoint is available for WireMock 3.1.0 or above.
 
+A [HEALTHCHECK](https://docs.docker.com/reference/dockerfile/#healthcheck) is also built into the docker image to
+allow direct querying of the docker container's health status.
+Under the hood, this uses the same method as above to verify the status of the container.
+
 ## Configuring WireMock
 
 You can configure WireMock using the following ways:

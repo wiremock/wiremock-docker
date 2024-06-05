@@ -69,3 +69,9 @@ jobs:
       - name: Run integration test
         working-directory: test/integration-tests
         run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-image=${{ matrix.versions.TAGS[0] }}"
+
+  container-image-scan:
+    uses: ./.github/workflows/container-image-scan.yml
+    with:
+      image_version: latest
+    secrets: inherit

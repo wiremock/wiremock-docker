@@ -5,6 +5,7 @@ on:
     inputs:
       image_version:
         description: The Docker container image version
+        type: string
         required: true
         default: latest
 

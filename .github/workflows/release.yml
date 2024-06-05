@@ -99,7 +99,7 @@ jobs:
 
   container-image-scan:
     uses: ./.github/workflows/container-image-scan.yml
-    needs: [check-new-version]
+    needs: [check-new-version, docker-build-push]
     if: needs.check-new-version.outputs.new_version
     with:
       image_version: ${{ needs.check-new-version.outputs.new_version }}

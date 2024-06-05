@@ -72,6 +72,7 @@ jobs:
 
   container-image-scan:
     uses: ./.github/workflows/container-image-scan.yml
+    needs: docker-build
     with:
       image_version: latest
     secrets: inherit

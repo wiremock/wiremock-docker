@@ -1,6 +1,6 @@
-FROM eclipse-temurin:11-jre
+FROM docker.io/library/eclipse-temurin:20
 
-LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
+LABEL maintainer="Hindumathy Sundaralingam <shindumathy@gmail.com>"
 
 ARG WIREMOCK_VERSION=3.9.1
 ENV WIREMOCK_VERSION $WIREMOCK_VERSION

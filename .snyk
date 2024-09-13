@@ -1,0 +1,80 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-UBUNTU2404-LIBPNG16-6702001:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:00:41.094Z
+        created: 2024-09-13T13:00:41.095Z
+  SNYK-UBUNTU2404-KRB5-6693034:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:00:54.423Z
+        created: 2024-09-13T13:00:54.427Z
+  SNYK-UBUNTU2404-KRB5-6693038:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:01:09.219Z
+        created: 2024-09-13T13:01:09.223Z
+  SNYK-UBUNTU2404-GNUPG2-6702792:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:01:22.110Z
+        created: 2024-09-13T13:01:22.113Z
+  SNYK-UBUNTU2404-GLIBC-6727419:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:01:32.787Z
+        created: 2024-09-13T13:01:32.791Z
+  SNYK-UBUNTU2404-COREUTILS-6727355:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:01:45.887Z
+        created: 2024-09-13T13:01:45.892Z
+  SNYK-UBUNTU2404-WGET-6709170:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:02:00.232Z
+        created: 2024-09-13T13:02:00.238Z
+  SNYK-UBUNTU2404-OPENSSL-7838291:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:02:12.079Z
+        created: 2024-09-13T13:02:12.083Z
+  SNYK-UBUNTU2404-OPENSSL-7886358:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:02:35.392Z
+        created: 2024-09-13T13:02:35.397Z
+  SNYK-UBUNTU2404-LIBGCRYPT20-6693674:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:02:52.497Z
+        created: 2024-09-13T13:02:52.501Z
+  SNYK-UBUNTU2404-KRB5-6693037:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:03:09.281Z
+        created: 2024-09-13T13:03:09.286Z
+  SNYK-UBUNTU2404-EXPAT-7885392:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:03:21.125Z
+        created: 2024-09-13T13:03:21.130Z
+  SNYK-UBUNTU2404-EXPAT-7885502:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:03:31.155Z
+        created: 2024-09-13T13:03:31.159Z
+  SNYK-UBUNTU2404-EXPAT-7885595:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:03:50.947Z
+        created: 2024-09-13T13:03:50.952Z
+  SNYK-UBUNTU2404-CURL-7931919:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11.0.24_8-jre, no fixed image available yet
+        expires: 2024-10-13T13:03:59.372Z
+        created: 2024-09-13T13:03:59.377Z
+patch: {}

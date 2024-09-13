@@ -16,9 +16,11 @@ jobs:
 
     strategy:
       matrix:
-        image:
-          - ghcr.io/wiremock/wiremock:${{ inputs.image_version }}
-          - ghcr.io/wiremock/wiremock:${{ inputs.image_version }}-alpine
+        versions:
+          - CONTEXT: .
+            image: ghcr.io/wiremock/wiremock:${{ inputs.image_version }}
+          - CONTEXT: alpine
+            image: ghcr.io/wiremock/wiremock:${{ inputs.image_version }}-alpine
 
     steps:
       - uses: actions/checkout@v4
@@ -31,13 +33,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull image to check we've got it
-        run: docker pull ${{ matrix.image }}
+        run: docker pull ${{ matrix.versions.image }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ matrix.image }}
+          image: ${{ matrix.versions.image }}
           command: test
-          args: --file=Dockerfile --severity-threshold=high --fail-on=upgradable --org=f310ee2f-5552-444d-84ee-ec8c44c33adb
+          args: --file=${{ matrix.versions.CONTEXT }}/Dockerfile --severity-threshold=high --fail-on=upgradable --org=f310ee2f-5552-444d-84ee-ec8c44c33adb --policy-path=${{ matrix.versions.CONTEXT }}/.snyk

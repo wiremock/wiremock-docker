@@ -1,0 +1,20 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-ALPINE320-EXPAT-7908298:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11-jre-alpine, no fixed image available yet
+        expires: 2024-10-13T13:27:25.403Z
+        created: 2024-09-13T13:27:25.405Z
+  SNYK-ALPINE320-EXPAT-7908299:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11-jre-alpine, no fixed image available yet
+        expires: 2024-10-13T13:27:35.505Z
+        created: 2024-09-13T13:27:35.509Z
+  SNYK-ALPINE320-EXPAT-7908300:
+    - '*':
+        reason: Brought in by base layer eclipse-temurin:11-jre-alpine, no fixed image available yet
+        expires: 2024-10-13T13:27:45.509Z
+        created: 2024-09-13T13:27:45.513Z
+patch: {}

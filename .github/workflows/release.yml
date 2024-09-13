@@ -57,7 +57,7 @@ jobs:
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
             PLATFORMS:
               - linux/amd64
-    
+
     steps:
 
       - name: Set up QEMU
@@ -152,21 +152,23 @@ jobs:
     if: needs.check-new-version.outputs.new_version
     strategy:
       matrix:
-        image:
-          - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
-          - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
+        versions:
+          - CONTEXT: .
+            image: wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
+          - CONTEXT: alpine
+            image: wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Pull image to check we've got it
-        run: docker pull ${{ matrix.image }}
+        run: docker pull ${{ matrix.versions.image }}
 
       - name: Run Snyk to monitor Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ matrix.image }}
+          image: ${{ matrix.versions.image }}
           command: monitor
-          args: --file=Dockerfile --org=f310ee2f-5552-444d-84ee-ec8c44c33adb --project-name=wiremock-docker
+          args: --file=${{ matrix.versions.CONTEXT }}/Dockerfile --org=f310ee2f-5552-444d-84ee-ec8c44c33adb --project-name=wiremock-docker --policy-path=${{ matrix.versions.CONTEXT }}/.snyk

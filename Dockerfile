@@ -1,4 +1,4 @@
-FROM eclipse-temurin:20.0.2_9-jre
+FROM docker pull chainguard/jdk:openjdk-11.0.23
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

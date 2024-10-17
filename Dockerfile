@@ -1,4 +1,4 @@
-FROM docker pull chainguard/jdk:openjdk-11.0.23
+FROM chainguard/jdk:openjdk-11.0.23
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

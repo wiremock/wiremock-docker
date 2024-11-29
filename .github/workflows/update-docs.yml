@@ -13,7 +13,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@main
       - name: Push DockerHub Description
-        uses: peter-evans/dockerhub-description@v3.4.2
+        uses: peter-evans/dockerhub-description@v4.0.0
         with:
           username: wiremockio
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}

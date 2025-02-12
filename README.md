@@ -59,8 +59,8 @@ The most important tags are listed below.
 
 ### Latest images
 
-- `3.11.0-1` [(3.11.0-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.11.0-1/Dockerfile)
-- `3.11.0-1-alpine` [(3.11-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.11.0-1/alpine/Dockerfile)
+- `3.12.0-1` [(3.12.0-1/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.12.0-1/Dockerfile)
+- `3.12.0-1-alpine` [(3.12-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/3.12.0-1/alpine/Dockerfile)
 - `latest` [(latest/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest/Dockerfile)
 - `latest-alpine` [(latest-alpine/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/latest-alpine/Dockerfile)
 - `main` [(main/Dockerfile)](https://github.com/wiremock/wiremock-docker/blob/main/Dockerfile)
@@ -111,7 +111,7 @@ you can add them to the end of the command line.
 For example, to enable HTTPs: `--https-port 8443 --verbose`
 
 ```sh
-docker run -it --rm -p 8443.11443 wiremock/wiremock --https-port 8443 --verbose
+docker run -it --rm -p 8443.12443 wiremock/wiremock --https-port 8443 --verbose
 ```
 
 ### Using environment variables
@@ -127,7 +127,7 @@ Example for passing the CLI options:
 ```sh
 docker run -it --rm \
   -e WIREMOCK_OPTIONS='--https-port 8443 --verbose' \
-  -p 8443.11443 \
+  -p 8443.12443 \
   --name wiremock \
   wiremock/wiremock:latest
 ```
@@ -223,7 +223,7 @@ For HTTPs, the `8443` port is exposed by default.
 To run with HTTPs, run the following command:
 
 ```sh
-docker run -it --rm -p 8443.11443 wiremock/wiremock --https-port 8443 --verbose
+docker run -it --rm -p 8443.12443 wiremock/wiremock --https-port 8443 --verbose
 ```
 
 To check the HTTPs on the default exposed port,

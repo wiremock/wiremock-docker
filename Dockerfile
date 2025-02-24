@@ -1,12 +1,24 @@
+
+FROM golang:1.23.6 AS gobuilder
+ENV GOSU_VERSION=1.17
+WORKDIR /go/src/github.com/tianon
+RUN git clone https://github.com/tianon/gosu.git --branch $GOSU_VERSION
+WORKDIR /go/src/github.com/tianon/gosu
+RUN go mod download
+RUN go build
+
+
 FROM eclipse-temurin:11.0.24_8-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
 ARG WIREMOCK_VERSION=3.12.0
 ENV WIREMOCK_VERSION=$WIREMOCK_VERSION
-ENV GOSU_VERSION=1.17
 
 WORKDIR /home/wiremock
+
+# copy custom build gosu to final image
+COPY --from=gobuilder /go/src/github.com/tianon/gosu/gosu /usr/local/bin/gosu
 
 # grab gosu for easy step-down from root
 RUN set -eux; \
@@ -23,21 +35,11 @@ RUN set -eux; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 	dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
-	wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; \
-	wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc"; \
-	\
-  # verify the signature
-	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \
-	gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \
-	command -v gpgconf && gpgconf --kill all || :; \
-	rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc; \
-	\
+    \
   # clean up fetch dependencies
 	apt-mark auto '.*' > /dev/null; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
 	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-	\
 	chmod +x /usr/local/bin/gosu; \
   # verify that the binary works
 	gosu --version; \

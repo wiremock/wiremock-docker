@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.24_8-jre
+FROM eclipse-temurin:24_36-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
@@ -10,10 +10,11 @@ WORKDIR /home/wiremock
 
 # grab gosu for easy step-down from root
 RUN set -eux; \
+	apt-get update; \
+  apt-get install -y --no-install-recommends ca-certificates curl; \
   # save list of currently installed packages for later so we can clean up
 	savedAptMark="$(apt-mark showmanual)"; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends ca-certificates wget; \
+	apt-get install -y --no-install-recommends wget; \
 	if ! command -v gpg; then \
 		apt-get install -y --no-install-recommends gnupg2 dirmngr; \
 	elif gpg --version | grep -q '^gpg (GnuPG) 1\.'; then \

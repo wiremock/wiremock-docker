@@ -42,8 +42,7 @@ jobs:
               - ghcr.io/wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}
             PLATFORMS:
               - linux/amd64
-              - linux/arm64
-              - linux/arm/v7
+              - linux/arm64/v8
           - CONTEXT: alpine
             IMAGES:
               - wiremock/wiremock:${{ needs.check-new-version.outputs.new_version }}-alpine

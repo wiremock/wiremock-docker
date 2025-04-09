@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre-alpine
+FROM eclipse-temurin:24_36-jre-alpine-3.21
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
@@ -7,7 +7,7 @@ ENV WIREMOCK_VERSION=$WIREMOCK_VERSION
 
 WORKDIR /home/wiremock
 
-RUN apk add --update openssl
+RUN apk add --update openssl libexpat
 
 # grab su-exec for easy step-down from root
 # and bash

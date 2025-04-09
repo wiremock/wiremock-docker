@@ -18,8 +18,7 @@ jobs:
               - wiremock/wiremock:test
             PLATFORMS:
               - linux/amd64
-              - linux/arm64
-              - linux/arm/v7
+              - linux/arm64/v8
           - CONTEXT: alpine
             TAGS:
               - wiremock/wiremock:test-alpine
@@ -27,13 +26,13 @@ jobs:
               - linux/amd64
 
     steps:
-      
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
           image: tonistiigi/binfmt:latest
           platforms: all
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -65,7 +64,7 @@ jobs:
           java-version: 11
           distribution: 'temurin'
           cache: maven
-    
+
       - name: Run integration test
         working-directory: test/integration-tests
         run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-image=${{ matrix.versions.TAGS[0] }}"

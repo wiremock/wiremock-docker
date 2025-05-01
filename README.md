@@ -15,7 +15,8 @@ pull the Docker image,
 and start the WireMock instance.
 
 ```shell
-docker pull wiremock/wiremock:latest
+docker pull wiremock/wiremock:latest # Using Docker Hub
+docker pull ghcr.io/wiremock/wiremock:latest # Using GitHub Packages
 git clone https://github.com/wiremock/wiremock-docker.git
 docker run -it --rm \
   -p 8080:8080 \
@@ -77,6 +78,14 @@ The most important tags are listed below.
 - `nightly-alpine` [(main-alpine/Dockerfile-nightly)](https://github.com/wiremock/wiremock-docker/blob/main/alpine/Dockerfile-nightly)
 - `3x`- Latest WireMock 3.x image, with bundled Java 11 - now `latest`
 - `3x-alpine` - Latest WireMock alpine 3.x image, with bundled Java 11 - now `latest`
+
+### GitHub Packages
+
+The images are also available on GitHub Packages. You can pull the images using the following commands:
+
+```shell
+docker pull ghcr.io/wiremock/wiremock:latest
+```
 
 ## Using WireMock in Docker
 

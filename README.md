@@ -3,6 +3,19 @@
 [![Main](https://github.com/wiremock/wiremock-docker/actions/workflows/main.yml/badge.svg)](https://github.com/wiremock/wiremock-docker/actions/workflows/main.yml) [![Nightly](https://github.com/wiremock/wiremock-docker/actions/workflows/nightly.yml/badge.svg)](https://github.com/wiremock/wiremock-docker/actions/workflows/nightly.yml) [![Docker Pulls](https://img.shields.io/docker/pulls/wiremock/wiremock.svg)](https://hub.docker.com/r/wiremock/wiremock/)
 [![a](https://img.shields.io/badge/slack-Join%20us-brightgreen?style=flat&logo=slack)](https://slack.wiremock.org/)
 
+---
+
+<table>
+<tr>
+<td>
+<img src="https://wiremock.org/images/wiremock-cloud/wiremock_cloud_logo.png" alt="WireMock Cloud Logo" height="20" align="left">
+<strong>WireMock open source is supported by <a href="https://www.wiremock.io/cloud-overview?utm_source=github.com&utm_campaign=wiremock-README.md-banner">WireMock Cloud</a>. Please consider trying it out if your team needs to collaborate on cloud-hosted mocks with advanced capabilities such as OpenAPI, dynamic state, data sources and more.</strong>
+</td>
+</tr>
+</table>
+
+---
+
 The official Docker image for WireMock Standalone deployments.
 It includes WireMock for Java under the hood, and fully compatible with its features.
 You can learn more about WireMock standalone on the

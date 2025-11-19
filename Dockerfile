@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.24_8-jre
+FROM eclipse-temurin:11.0.29_7-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

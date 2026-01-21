@@ -1,6 +1,6 @@
 # BUILD
 
-FROM gradle:7-jdk11 AS builder
+FROM gradle:8-jdk11 AS builder
 
 WORKDIR /workdir
 

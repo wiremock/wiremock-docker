@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.24_8-jre
+FROM chainguard/jdk:openjdk-11.0.23
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

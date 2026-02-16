@@ -115,7 +115,6 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: "4.x"
 
       - name: Update version
         run: |
@@ -128,7 +127,7 @@ jobs:
           git add .
           git commit -m "upgrade to version ${{ needs.check-new-version.outputs.new_version }}" || echo "No changes to commit"
           git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/wiremock/wiremock-docker.git
-          git push origin 4.x
+          git push origin main
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -136,5 +135,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ needs.check-new-version.outputs.new_version }}
-          target_commitish: "4.x"
           prerelease: true

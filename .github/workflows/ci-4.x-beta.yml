@@ -1,4 +1,4 @@
-name: CI
+name: CI - 4.x-beta
 
 on:
   push:

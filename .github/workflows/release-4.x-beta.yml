@@ -28,9 +28,39 @@ jobs:
           LATEST_VERSION=$(git -c 'versionsort.suffix=-' ls-remote --tags --sort='v:refname' https://github.com/wiremock/wiremock.git '4.*.*' | tail -1 | cut -d '/' -f3)
           echo "NEW_VERSION=${{ github.event.inputs.bundled-version }}-${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
 
-  docker-build-push:
+  verify-container-startup:
     runs-on: ubuntu-latest
     needs: [check-new-version]
+    if: needs.check-new-version.outputs.new_version
+    steps:
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Checkout sources
+        uses: actions/checkout@main
+
+      - name: Build WireMock Docker image (local)
+        run: |
+          docker buildx build \
+            --tag wiremock/wiremock:verify \
+            --load \
+            --build-arg "WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}" \
+            --build-arg "JAVA_VERSION=17" \
+            --file Dockerfile \
+            .
+
+      - name: Verify container startup
+        run: |
+          docker run -d --name wiremock-test -p 8080:8080 wiremock/wiremock:verify
+          timeout 30 bash -c 'until curl -sf http://localhost:8080/__admin/health; do sleep 1; done'
+          echo "WireMock container started and health check passed"
+          docker stop wiremock-test
+          docker rm wiremock-test
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+    needs: [check-new-version, verify-container-startup]
     if: needs.check-new-version.outputs.new_version
     strategy:
       matrix:
@@ -96,7 +126,8 @@ jobs:
           push: true
           tags: ${{ join(matrix.versions.IMAGES, ',') }}
           build-args: |
-            "WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}"
+            WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}
+            JAVA_VERSION=17
 
   container-image-scan:
     uses: ./.github/workflows/container-image-scan.yml

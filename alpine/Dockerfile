@@ -1,4 +1,5 @@
-FROM eclipse-temurin:11-jre-alpine
+ARG JAVA_VERSION=17
+FROM eclipse-temurin:${JAVA_VERSION}-jre-alpine
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

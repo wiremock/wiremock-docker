@@ -55,9 +55,11 @@ jobs:
           push: false
           file: ${{ matrix.versions.CONTEXT }}/Dockerfile
           tags: ${{ matrix.versions.TAGS[0] }}
+          build-args: |
+            WIREMOCK_VERSION=4.0.0-beta.29
 
       - name: Build Wiremock Docker image
-        run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile --build-arg JAVA_VERSION=17
+        run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile --build-arg JAVA_VERSION=17 --build-arg WIREMOCK_VERSION=4.0.0-beta.29
 
       - name: Set up JDK
         uses: actions/setup-java@v3

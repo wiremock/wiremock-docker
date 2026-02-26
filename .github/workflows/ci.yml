@@ -59,10 +59,18 @@ jobs:
       - name: Build Wiremock Docker image
         run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile
 
+      - name: Verify container startup
+        run: |
+          docker run -d --name wiremock-test -p 8080:8080 ${{ matrix.versions.TAGS[0] }}
+          timeout 30 bash -c 'until curl -sf http://localhost:8080/__admin/health; do sleep 1; done'
+          echo "WireMock container started and health check passed"
+          docker stop wiremock-test
+          docker rm wiremock-test
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: 'temurin'
           cache: maven
     

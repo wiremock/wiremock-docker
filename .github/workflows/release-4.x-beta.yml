@@ -46,6 +46,7 @@ jobs:
             --tag wiremock/wiremock:verify \
             --load \
             --build-arg "WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}" \
+            --build-arg "JAVA_VERSION=17" \
             --file Dockerfile \
             .
 
@@ -125,7 +126,8 @@ jobs:
           push: true
           tags: ${{ join(matrix.versions.IMAGES, ',') }}
           build-args: |
-            "WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}"
+            WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}
+            JAVA_VERSION=17
 
   container-image-scan:
     uses: ./.github/workflows/container-image-scan.yml

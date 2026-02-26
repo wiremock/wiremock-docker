@@ -1,4 +1,5 @@
-FROM eclipse-temurin:17-jre
+ARG JAVA_VERSION=11
+FROM eclipse-temurin:${JAVA_VERSION}-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 

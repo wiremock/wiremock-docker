@@ -34,7 +34,6 @@ jobs:
             PLATFORMS:
               - linux/amd64
               - linux/arm64
-              - linux/arm/v7
           - CONTEXT: alpine
             JAVA_VERSION: 17
             TAGS:

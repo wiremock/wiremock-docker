@@ -57,12 +57,12 @@ jobs:
           tags: ${{ matrix.versions.TAGS[0] }}
 
       - name: Build Wiremock Docker image
-        run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile --build-arg JAVA_VERSION=11
+        run: docker buildx build --tag ${{ matrix.versions.TAGS[0] }} --load ${{ matrix.versions.CONTEXT }} --file ${{ matrix.versions.CONTEXT }}/Dockerfile --build-arg JAVA_VERSION=17
 
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: 'temurin'
           cache: maven
     

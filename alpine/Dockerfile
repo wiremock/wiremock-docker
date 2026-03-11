@@ -8,11 +8,9 @@ ENV WIREMOCK_VERSION=$WIREMOCK_VERSION
 
 WORKDIR /home/wiremock
 
-RUN apk add --update openssl
+RUN apk update && apk upgrade
 
-# grab su-exec for easy step-down from root
-# and bash
-RUN apk add --no-cache 'su-exec>=0.2' bash
+RUN apk add --no-cache openssl bash
 
 # grab wiremock standalone jar
 RUN mkdir -p /var/wiremock/lib/ \

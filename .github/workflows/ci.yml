@@ -72,9 +72,11 @@ jobs:
         working-directory: test/integration-tests
         run: mvn -B -ntp package verify --file pom.xml -DargLine="-Dit.wiremock-image=${{ matrix.versions.TAGS[0] }}"
 
-  container-image-scan:
-    uses: ./.github/workflows/container-image-scan.yml
-    needs: docker-build
-    with:
-      image_version: latest
-    secrets: inherit
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ${{ matrix.versions.TAGS[0] }}
+          command: test
+          args: --file=${{ matrix.versions.CONTEXT }}/Dockerfile --severity-threshold=high --fail-on=upgradable --org=f310ee2f-5552-444d-84ee-ec8c44c33adb --policy-path=${{ matrix.versions.CONTEXT }}/.snyk

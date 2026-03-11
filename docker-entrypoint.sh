@@ -11,7 +11,7 @@ fi
 if [ "$uid" != "" ]; then
   # Change the ownership of /home/wiremock to $uid
   chown -R $uid:$uid /home/wiremock
-  set -- gosu $uid:$uid "$@"
+  set -- setpriv --reuid=$uid --regid=$uid --init-groups "$@"
 fi
 
 exec "$@" $WIREMOCK_OPTIONS

@@ -3,7 +3,7 @@ FROM eclipse-temurin:${JAVA_VERSION}-jre
 
 LABEL maintainer="Rodolphe CHAIGNEAU <rodolphe.chaigneau@gmail.com>"
 
-ARG WIREMOCK_VERSION=4.0.0-beta.33
+ARG WIREMOCK_VERSION=4.0.0-beta.34
 ENV WIREMOCK_VERSION=$WIREMOCK_VERSION
 
 WORKDIR /home/wiremock

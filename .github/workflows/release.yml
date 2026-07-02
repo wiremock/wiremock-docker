@@ -116,27 +116,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Update version
-        run: |
-          # Replace version in README.md
-          LAST_VERSION=$(git describe --tag --abbrev=0)
-          LAST_MINOR_VERSION=${LAST_VERSION%.*}
-          NEW_VERSION=${{ needs.check-new-version.outputs.new_version }}
-          NEW_MINOR_VERSION=${NEW_VERSION%.*}
-          sed -i s/${LAST_VERSION}/${NEW_VERSION}/g README.md
-          sed -i s/${LAST_MINOR_VERSION}/${NEW_MINOR_VERSION}/g README.md
-
-          # Replace version in Dockerfiles
-          LAST_VERSION=${LAST_VERSION%-*}
-          sed -i 's/ARG WIREMOCK_VERSION=.*/ARG WIREMOCK_VERSION=${{ github.event.inputs.bundled-version }}/g' Dockerfile alpine/Dockerfile
-
-          # Push update
-          git config --local user.name "wiremockio"
-          git config --local user.email "release-bot@wiremock.org"
-          git add .
-          git commit -m "upgrade to version ${NEW_VERSION}"
-          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/wiremock/wiremock-docker.git
-          git push origin main
 
       - name: Release
         uses: softprops/action-gh-release@v1
